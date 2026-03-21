@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lale Boutique - Каталог</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #fff;
+            color: #111;
+            line-height: 1.4;
+        }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 40px; }
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255,255,255,0.96);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .header-inner { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.2rem; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; color: #111; }
+        .logo-img { height: 32px; width: auto; }
+        .nav a {
+            text-decoration: none;
+            color: #111;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-left: 32px;
+            transition: opacity 0.2s;
+        }
+        .nav a:hover { opacity: 0.6; }
+        main { padding-top: 100px; }
+        .category-section {
+            padding: 40px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .category-title {
+            font-size: 1.2rem;
+            font-weight: 400;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 40px;
+        }
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 40px;
+        }
+        .category-card {
+            cursor: pointer;
+            transition: opacity 0.3s;
+            text-align: center;
+        }
+        .category-card:hover { opacity: 0.7; }
+        .category-img {
+            width: 100%;
+            aspect-ratio: 3/4;
+            object-fit: cover;
+            background: #f5f5f5;
+            margin-bottom: 15px;
+        }
+        .category-name {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 40px;
+            margin-top: 20px;
+        }
+        .product-card {
+            cursor: pointer;
+            transition: opacity 0.3s;
+            text-align: center;
+        }
+        .product-card:hover { opacity: 0.8; }
+        .product-img {
+            width: 100%;
+            aspect-ratio: 3/4;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+        .product-brand {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #888;
+        }
+        .product-title { font-size: 0.85rem; margin: 5px 0; }
+        .product-price { font-size: 0.85rem; color: #666; }
+        .btn-direct {
+            background: none;
+            border: 1px solid #111;
+            padding: 8px 20px;
+            margin-top: 12px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-direct:hover { background: #111; color: white; }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 30px;
+            color: #888;
+            text-decoration: none;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .back-link:hover { color: #111; }
+        .hidden { display: none; }
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            color: #aaa;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+        @media (max-width: 768px) {
+            .container { padding: 0 20px; }
+            .category-grid, .products-grid { gap: 25px; }
+        }
+        /* Модалка (та же) */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: white;
+            max-width: 1100px;
+            width: 90%;
+            margin: 40px auto;
+            position: relative;
+            padding: 30px;
+        }
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 28px;
+            cursor: pointer;
+        }
+        .modal-product { display: flex; flex-wrap: wrap; gap: 40px; }
+        .modal-gallery { flex: 1; min-width: 280px; }
+        .modal-main-img { width: 100%; margin-bottom: 15px; }
+        .modal-thumbnails { display: flex; gap: 10px; flex-wrap: wrap; }
+        .modal-thumb { width: 70px; cursor: pointer; opacity: 0.6; }
+        .modal-thumb:hover { opacity: 1; }
+        .modal-info { flex: 1; min-width: 280px; }
+        .modal-info h2 { font-size: 1.5rem; font-weight: 400; margin-bottom: 10px; }
+        .modal-brand { font-size: 0.7rem; text-transform: uppercase; color: #888; margin-bottom: 15px; }
+        .modal-price { font-size: 1.2rem; margin: 20px 0; }
+        .modal-direct {
+            display: inline-block;
+            background: #111;
+            color: white;
+            text-decoration: none;
+            padding: 12px 30px;
+            margin-top: 20px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="container header-inner">
+        <a href="index.html" class="logo" id="logo-container">LALE BOUTIQUE</a>
+        <div class="nav">
+            <a href="index.html">HOME</a>
+            <a href="catalog.html">SHOP</a>
+            <a href="index.html#contacts">CONTACT</a>
+        </div>
+    </div>
+</header>
+<main>
+    <div class="container">
+        <div id="category-view">
+            <div class="category-section">
+                <h2 class="category-title">CHOOSE CATEGORY</h2>
+                <div class="category-grid" id="categories-grid"></div>
+            </div>
+        </div>
+        <div id="products-view" class="hidden">
+            <a href="#" id="back-to-categories" class="back-link">← BACK TO CATEGORIES</a>
+            <div id="products-container"></div>
+        </div>
+    </div>
+</main>
+<footer><div class="container">LALE BOUTIQUE © 2025</div></footer>
+
+<div id="productModal" class="modal"><div class="modal-content"><span class="close-modal">&times;</span><div id="modal-body"></div></div></div>
+
+<script>
+    const products = [
+        { id:1, name:"Flower Print Dress", brand:"Lale", price:"€159", category:"Dresses", images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Dress+1"], description:"Elegant fitted dress", material:"95% Cotton", sizes:"XS,S,M,L", care:"Gentle wash", instagramLink:"https://www.instagram.com/lale_boutique05/" },
+        { id:2, name:"Open Back Midi", brand:"Lale", price:"€195", category:"Dresses", images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Dress+2"], description:"Open back midi", material:"Viscose", sizes:"S,M,L", care:"Hand wash", instagramLink:"https://www.instagram.com/lale_boutique05/" },
+        { id:3, name:"Silk Maxi", brand:"Mila Grace", price:"€345", category:"Dresses", images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Dress+3"], description:"Silk maxi dress", material:"Silk", sizes:"XS,S,M", care:"Dry clean", instagramLink:"https://www.instagram.com/lale_boutique05/" },
+        { id:4, name:"Belted Jumpsuit", brand:"Verona", price:"€245", category:"Jumpsuits", images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Jumpsuit+1"], description:"Belted jumpsuit", material:"Polyester/Cotton", sizes:"S,M,L", care:"Machine wash", instagramLink:"https://www.instagram.com/lale_boutique05/" },
+        { id:5, name:"Linen Jumpsuit", brand:"Lale", price:"€205", category:"Jumpsuits", images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Jumpsuit+2"], description:"Linen jumpsuit", material:"Linen", sizes:"S,M,L", care:"Gentle", instagramLink:"https://www.instagram.com/lale_boutique05/" },
+        { id:6, name:"Leather Pencil Skirt", brand:"Mila Grace", price:"€189", category:"Skirts", images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Skirt+1"], description:"Eco leather skirt", material:"Polyurethane", sizes:"S,M,L", care:"Wipe", instagramLink:"https://www.instagram.com/lale_boutique05/" },
+        { id:7, name:"Pleated Midi Skirt", brand:"Verona", price:"€149", category:"Skirts", images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Skirt+2"], description:"Pleated skirt", material:"Polyester", sizes:"XS,S,M", care:"Gentle", instagramLink:"https://www.instagram.com/lale_boutique05/" },
+        { id:8, name:"Silk Blouse", brand:"Mila Grace", price:"€215", category:"Blouses", images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Blouse+1"], description:"Silk blouse", material:"Polyester", sizes:"S,M,L", care:"Hand wash", instagramLink:"https://www.instagram.com/lale_boutique05/" }
+    ];
+
+    const categories = [...new Set(products.map(p => p.category))];
+
+    function renderCategories() {
+        const grid = document.getElementById('categories-grid');
+        grid.innerHTML = categories.map(cat => `
+            <div class="category-card" data-category="${cat}">
+                <img class="category-img" src="https://placehold.co/600x800/f5f5f5/aaa?text=${cat}" alt="${cat}">
+                <div class="category-name">${cat.toUpperCase()}</div>
+            </div>
+        `).join('');
+        document.querySelectorAll('.category-card').forEach(card => {
+            card.addEventListener('click', () => showProducts(card.dataset.category));
+        });
+    }
+
+    function showProducts(category) {
+        const filtered = products.filter(p => p.category === category);
+        const container = document.getElementById('products-container');
+        container.innerHTML = filtered.map(p => `
+            <div class="product-card" data-id="${p.id}">
+                <img class="product-img" src="${p.images[0]}">
+                <div class="product-brand">${p.brand}</div>
+                <div class="product-title">${p.name}</div>
+                <div class="product-price">${p.price}</div>
+                <button class="btn-direct" data-id="${p.id}">ORDER VIA DM</button>
+            </div>
+        `).join('');
+        document.querySelectorAll('.product-card').forEach(card => {
+            const btn = card.querySelector('.btn-direct');
+            const prodId = parseInt(card.dataset.id);
+            card.addEventListener('click', (e) => { if(e.target !== btn) openModal(prodId); });
+            btn.addEventListener('click', (e) => { e.stopPropagation(); window.open(products.find(p => p.id === prodId).instagramLink, '_blank'); });
+        });
+        document.getElementById('category-view').classList.add('hidden');
+        document.getElementById('products-view').classList.remove('hidden');
+    }
+
+    function backToCategories() {
+        document.getElementById('category-view').classList.remove('hidden');
+        document.getElementById('products-view').classList.add('hidden');
+    }
+
+    function openModal(id) {
+        const p = products.find(p=>p.id===id);
+        if(!p) return;
+        const modalBody = document.getElementById('modal-body');
+        modalBody.innerHTML = `<div class="modal-product"><div class="modal-gallery"><img class="modal-main-img" id="modal-main-img" src="${p.images[0]}"><div class="modal-thumbnails">${p.images.map(img=>`<img class="modal-thumb" src="${img}">`).join('')}</div></div><div class="modal-info"><h2>${p.name}</h2><div class="modal-brand">${p.brand}</div><div class="modal-price">${p.price}</div><div class="modal-desc">${p.description}</div><div><strong>Material:</strong> ${p.material}</div><div><strong>Sizes:</strong> ${p.sizes}</div><div><strong>Care:</strong> ${p.care}</div><a href="${p.instagramLink}" target="_blank" class="modal-direct">ORDER VIA INSTAGRAM DM</a></div></div>`;
+        const mainImg = document.getElementById('modal-main-img');
+        document.querySelectorAll('.modal-thumb').forEach(thumb => thumb.addEventListener('click', () => mainImg.src = thumb.src));
+        document.getElementById('productModal').style.display = 'flex';
+    }
+
+    document.getElementById('back-to-categories').addEventListener('click', (e) => { e.preventDefault(); backToCategories(); });
+    document.querySelector('.close-modal')?.addEventListener('click', () => document.getElementById('productModal').style.display = 'none');
+    window.addEventListener('click', e => { if(e.target === document.getElementById('productModal')) document.getElementById('productModal').style.display = 'none'; });
+
+    renderCategories();
+
+    window.addLogo = (url) => {
+        document.getElementById('logo-container').innerHTML = `<img src="${url}" class="logo-img">`;
+    };
+</script>
+</body>
+</html>
