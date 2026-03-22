@@ -24,54 +24,64 @@
             padding: 20px 0;
             border-bottom: 1px solid rgba(0,0,0,0.05);
         }
-        .header-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
-        .logo { font-size: 1.2rem; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; color: #111; }
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: #111;
+        }
         .logo-img { height: 32px; width: auto; }
-        .nav { display: flex; align-items: center; gap: 32px; }
         .nav a {
             text-decoration: none;
             color: #111;
             font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 1px;
+            margin-left: 32px;
             transition: opacity 0.2s;
         }
         .nav a:hover { opacity: 0.6; }
-        /* Категории выпадающий список */
-        .dropdown {
-            position: relative;
-            display: inline-block;
+        /* Категории плитками */
+        .categories-bar {
+            background: white;
+            padding: 20px 0;
+            border-bottom: 1px solid #f0f0f0;
+            margin-top: 80px; /* отступ под фиксированную шапку */
         }
-        .dropbtn {
-            background: none;
-            border: none;
+        .categories-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .category-tile {
+            padding: 8px 24px;
+            background: #f8f8f8;
+            text-decoration: none;
+            color: #111;
             font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-            cursor: pointer;
-            padding: 0;
-            color: #111;
+            transition: all 0.2s;
+            border-radius: 30px;
         }
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: white;
-            min-width: 200px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-            z-index: 1;
-            top: 100%;
-            left: 0;
+        .category-tile:hover {
+            background: #111;
+            color: white;
         }
-        .dropdown-content a {
-            color: #111;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            font-size: 0.8rem;
+        .category-tile.active {
+            background: #111;
+            color: white;
         }
-        .dropdown-content a:hover { background-color: #f5f5f5; }
-        .dropdown:hover .dropdown-content { display: block; }
-        main { padding-top: 100px; }
         /* Двухколоночный макет */
         .catalog-layout {
             display: flex;
@@ -235,10 +245,6 @@
             text-transform: uppercase;
             margin-top: 40px;
         }
-        .active-product {
-            opacity: 0.8;
-            /* Можно добавить рамку */
-        }
     </style>
 </head>
 <body>
@@ -247,14 +253,19 @@
         <a href="index.html" class="logo" id="logo-container">LALE BOUTIQUE</a>
         <div class="nav">
             <a href="index.html">HOME</a>
-            <div class="dropdown">
-                <button class="dropbtn">КАТЕГОРИИ ▼</button>
-                <div class="dropdown-content" id="categories-dropdown"></div>
-            </div>
+            <a href="catalog.html">SHOP</a>
             <a href="index.html#contacts">CONTACT</a>
         </div>
     </div>
 </header>
+
+<!-- Блок категорий плитками -->
+<div class="categories-bar">
+    <div class="container">
+        <div class="categories-grid" id="categories-grid"></div>
+    </div>
+</div>
+
 <main>
     <div class="container">
         <div class="catalog-layout">
@@ -292,11 +303,25 @@
         activeCategory = categories[0]; // по умолчанию первая категория
     }
 
-    // Функция для отображения товаров выбранной категории
+    // Рендер плиток категорий
+    function renderCategoryTiles() {
+        const container = document.getElementById('categories-grid');
+        container.innerHTML = categories.map(cat => `
+            <a href="?category=${encodeURIComponent(cat)}" class="category-tile ${cat === activeCategory ? 'active' : ''}">
+                ${cat}
+            </a>
+        `).join('');
+    }
+
+    // Рендер товаров выбранной категории
     function renderProducts() {
         const filtered = products.filter(p => p.category === activeCategory);
         const grid = document.getElementById('products-grid');
         grid.innerHTML = '';
+        if (filtered.length === 0) {
+            grid.innerHTML = '<p style="text-align:center; grid-column:1/-1;">Нет товаров в этой категории</p>';
+            return;
+        }
         filtered.forEach(product => {
             const card = document.createElement('div');
             card.className = 'product-card';
@@ -311,11 +336,9 @@
             card.addEventListener('click', () => showProductDetail(product.id));
             grid.appendChild(card);
         });
-        // Если есть товары, показать первый
+        // Показать первый товар по умолчанию
         if (filtered.length > 0) {
             showProductDetail(filtered[0].id);
-        } else {
-            document.getElementById('product-detail').innerHTML = '<div style="text-align: center; color: #888;">Нет товаров в этой категории</div>';
         }
     }
 
@@ -360,7 +383,7 @@
                 mainImg.src = thumb.src;
             });
         });
-        // Можно добавить выделение выбранного товара в сетке
+        // Подсветка выбранного товара в сетке
         document.querySelectorAll('.product-card').forEach(card => {
             if (parseInt(card.dataset.id) === productId) {
                 card.style.opacity = '0.8';
@@ -370,25 +393,9 @@
         });
     }
 
-    // Заполнение выпадающего меню категорий
-    function renderCategoriesDropdown() {
-        const dropdown = document.getElementById('categories-dropdown');
-        dropdown.innerHTML = categories.map(cat => `<a href="?category=${encodeURIComponent(cat)}">${cat}</a>`).join('');
-    }
-
-    // Установка активной категории в кнопке (можно оставить без изменения)
-    function setActiveCategoryInDropdown() {
-        const dropdownLinks = document.querySelectorAll('#categories-dropdown a');
-        dropdownLinks.forEach(link => {
-            if (link.getAttribute('href') === `?category=${encodeURIComponent(activeCategory)}`) {
-                link.style.fontWeight = 'bold';
-            }
-        });
-    }
-
-    renderCategoriesDropdown();
+    // Инициализация
+    renderCategoryTiles();
     renderProducts();
-    setActiveCategoryInDropdown();
 </script>
 </body>
 </html>
