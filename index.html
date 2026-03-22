@@ -99,7 +99,7 @@
         }
         .carousel-container::-webkit-scrollbar { display: none; }
         .carousel-item {
-            flex: 0 0 300px;
+            flex: 0 0 280px;
             cursor: pointer;
             transition: opacity 0.3s;
             text-decoration: none;
@@ -122,6 +122,11 @@
         }
         .carousel-title { font-size: 0.85rem; margin: 5px 0; }
         .carousel-price { font-size: 0.85rem; color: #666; }
+        .carousel-sizes {
+            font-size: 0.7rem;
+            color: #888;
+            margin-top: 4px;
+        }
         .carousel-nav {
             position: absolute;
             top: 40%;
@@ -197,7 +202,7 @@
             .carousel { padding: 0 20px; }
             .carousel-item { flex: 0 0 240px; }
         }
-        /* Модалка (та же) */
+        /* Модалка */
         .modal {
             display: none;
             position: fixed;
@@ -264,36 +269,36 @@
     <section id="home" class="hero">
         <div class="hero-content">
             <div id="hero-logo"><div class="hero-logo">LALE BOUTIQUE</div></div>
-            <p class="hero-description">MULTIBRAND SHOWROOM<br>WOMEN'S READY-TO-WEAR</p>
+            <p class="hero-description">МУЛЬТИБРЕНДОВЫЙ ШОУРУМ<br>ЖЕНСКАЯ ОДЕЖДА</p>
         </div>
         <div class="scroll-hint" onclick="document.getElementById('new').scrollIntoView({behavior:'smooth'})"><span></span></div>
     </section>
 
     <section id="new">
         <div class="container">
-            <h2 class="section-title">NEW ARRIVALS</h2>
+            <h2 class="section-title">НОВИНКИ</h2>
             <div class="carousel"><div class="carousel-container" id="new-items"></div><div class="carousel-nav prev" onclick="scrollCarousel('new-items',-1)">←</div><div class="carousel-nav next" onclick="scrollCarousel('new-items',1)">→</div></div>
         </div>
     </section>
 
     <section>
         <div class="container">
-            <h2 class="section-title">BESTSELLERS</h2>
+            <h2 class="section-title">ХИТЫ</h2>
             <div class="carousel"><div class="carousel-container" id="popular-items"></div><div class="carousel-nav prev" onclick="scrollCarousel('popular-items',-1)">←</div><div class="carousel-nav next" onclick="scrollCarousel('popular-items',1)">→</div></div>
         </div>
     </section>
 
     <section>
         <div class="container" style="text-align:center">
-            <a href="catalog.html" class="catalog-btn">VIEW FULL CATALOG</a>
+            <a href="catalog.html" class="catalog-btn">ВЕСЬ КАТАЛОГ</a>
         </div>
     </section>
 
     <section id="contacts">
         <div class="container">
             <div class="contacts-block">
-                <p>Dzerzhinskogo St, 6</p>
-                <p>Daily 11:00 – 20:00</p>
+                <p>ул. Дзержинского, 6</p>
+                <p>Ежедневно 11:00 – 20:00</p>
                 <a href="https://www.instagram.com/lale_boutique05" target="_blank" class="instagram-link">@lale_boutique05</a>
                 <div class="map"><iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A1234567890abcdef&source=constructor" allowfullscreen></iframe></div>
             </div>
@@ -305,22 +310,31 @@
 <div id="productModal" class="modal"><div class="modal-content"><span class="close-modal">&times;</span><div id="modal-body"></div></div></div>
 
 <script>
-    // Товары (те же, что и в каталоге)
     const products = [
-        { id:1, name:"Flower Print Dress", brand:"Lale", price:"€159", category:"Dresses", isNew:true, isPopular:true, images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Dress+1"], description:"Elegant fitted dress", material:"95% Cotton", sizes:"XS,S,M,L", care:"Gentle wash", instagramLink:"https://www.instagram.com/lale_boutique05/" },
-        { id:2, name:"Open Back Midi", brand:"Lale", price:"€195", category:"Dresses", isNew:true, isPopular:false, images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Dress+2"], description:"Open back midi", material:"Viscose", sizes:"S,M,L", care:"Hand wash", instagramLink:"https://www.instagram.com/lale_boutique05/" },
-        { id:3, name:"Silk Maxi", brand:"Mila Grace", price:"€345", category:"Dresses", isNew:false, isPopular:true, images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Dress+3"], description:"Silk maxi dress", material:"Silk", sizes:"XS,S,M", care:"Dry clean", instagramLink:"https://www.instagram.com/lale_boutique05/" },
-        { id:4, name:"Belted Jumpsuit", brand:"Verona", price:"€245", category:"Jumpsuits", isNew:true, isPopular:false, images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Jumpsuit+1"], description:"Belted jumpsuit", material:"Polyester/Cotton", sizes:"S,M,L", care:"Machine wash", instagramLink:"https://www.instagram.com/lale_boutique05/" },
-        { id:5, name:"Linen Jumpsuit", brand:"Lale", price:"€205", category:"Jumpsuits", isNew:false, isPopular:true, images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Jumpsuit+2"], description:"Linen jumpsuit", material:"Linen", sizes:"S,M,L", care:"Gentle", instagramLink:"https://www.instagram.com/lale_boutique05/" },
-        { id:6, name:"Leather Pencil Skirt", brand:"Mila Grace", price:"€189", category:"Skirts", isNew:false, isPopular:true, images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Skirt+1"], description:"Eco leather skirt", material:"Polyurethane", sizes:"S,M,L", care:"Wipe", instagramLink:"https://www.instagram.com/lale_boutique05/" },
-        { id:7, name:"Pleated Midi Skirt", brand:"Verona", price:"€149", category:"Skirts", isNew:true, isPopular:false, images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Skirt+2"], description:"Pleated skirt", material:"Polyester", sizes:"XS,S,M", care:"Gentle", instagramLink:"https://www.instagram.com/lale_boutique05/" },
-        { id:8, name:"Silk Blouse", brand:"Mila Grace", price:"€215", category:"Blouses", isNew:false, isPopular:true, images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Blouse+1"], description:"Silk blouse", material:"Polyester", sizes:"S,M,L", care:"Hand wash", instagramLink:"https://www.instagram.com/lale_boutique05/" }
+        { id:1, name:"Платье с цветочным принтом", brand:"Lale", price:"5 900 ₽", category:"Платья", isNew:true, isPopular:true, sizes:"XS, S, M, L", images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Dress+1"], description:"Элегантное платье-футляр", material:"95% хлопок, 5% эластан", care:"Деликатная стирка", instagramLink:"https://www.instagram.com/lale_boutique05/" },
+        { id:2, name:"Платье миди с открытой спиной", brand:"Lale", price:"7 200 ₽", category:"Платья", isNew:true, isPopular:false, sizes:"S, M, L", images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Dress+2"], description:"Платье с открытой спиной", material:"Вискоза 100%", care:"Ручная стирка", instagramLink:"https://www.instagram.com/lale_boutique05/" },
+        { id:3, name:"Шелковое платье макси", brand:"Mila Grace", price:"12 500 ₽", category:"Платья", isNew:false, isPopular:true, sizes:"XS, S, M", images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Dress+3"], description:"Шелковое платье макси", material:"Натуральный шелк", care:"Химчистка", instagramLink:"https://www.instagram.com/lale_boutique05/" },
+        { id:4, name:"Комбинезон с поясом", brand:"Verona", price:"8 900 ₽", category:"Комбинезоны", isNew:true, isPopular:false, sizes:"S, M, L", images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Jumpsuit+1"], description:"Стильный комбинезон", material:"Полиэстер 65%, хлопок 35%", care:"Машинная стирка", instagramLink:"https://www.instagram.com/lale_boutique05/" },
+        { id:5, name:"Льняной комбинезон", brand:"Lale", price:"7 500 ₽", category:"Комбинезоны", isNew:false, isPopular:true, sizes:"S, M, L", images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Jumpsuit+2"], description:"Льняной комбинезон", material:"Лен 100%", care:"Деликатная стирка", instagramLink:"https://www.instagram.com/lale_boutique05/" },
+        { id:6, name:"Кожаная юбка-карандаш", brand:"Mila Grace", price:"6 900 ₽", category:"Юбки", isNew:false, isPopular:true, sizes:"S, M, L", images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Skirt+1"], description:"Эко-кожа", material:"Полиуретан", care:"Влажная чистка", instagramLink:"https://www.instagram.com/lale_boutique05/" },
+        { id:7, name:"Плиссированная юбка миди", brand:"Verona", price:"5 500 ₽", category:"Юбки", isNew:true, isPopular:false, sizes:"XS, S, M", images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Skirt+2"], description:"Плиссированная юбка", material:"Полиэстер 100%", care:"Деликатная стирка", instagramLink:"https://www.instagram.com/lale_boutique05/" },
+        { id:8, name:"Шелковая блуза", brand:"Mila Grace", price:"7 800 ₽", category:"Блузы", isNew:false, isPopular:true, sizes:"S, M, L", images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Blouse+1"], description:"Атласная блуза", material:"Полиэстер 100%", care:"Ручная стирка", instagramLink:"https://www.instagram.com/lale_boutique05/" }
     ];
 
     function renderCarousel(containerId, items) {
         const container = document.getElementById(containerId);
         if(!container) return;
-        container.innerHTML = items.map(p => `<div class="carousel-item" data-id="${p.id}"><img class="carousel-img" src="${p.images[0]}"><div class="carousel-info"><div class="carousel-brand">${p.brand}</div><div class="carousel-title">${p.name}</div><div class="carousel-price">${p.price}</div></div></div>`).join('');
+        container.innerHTML = items.map(p => `
+            <div class="carousel-item" data-id="${p.id}">
+                <img class="carousel-img" src="${p.images[0]}">
+                <div class="carousel-info">
+                    <div class="carousel-brand">${p.brand}</div>
+                    <div class="carousel-title">${p.name}</div>
+                    <div class="carousel-price">${p.price}</div>
+                    <div class="carousel-sizes">${p.sizes}</div>
+                </div>
+            </div>
+        `).join('');
         document.querySelectorAll(`#${containerId} .carousel-item`).forEach(el => el.addEventListener('click', () => openModal(parseInt(el.dataset.id))));
     }
 
@@ -328,7 +342,7 @@
         const p = products.find(p=>p.id===id);
         if(!p) return;
         const modalBody = document.getElementById('modal-body');
-        modalBody.innerHTML = `<div class="modal-product"><div class="modal-gallery"><img class="modal-main-img" id="modal-main-img" src="${p.images[0]}"><div class="modal-thumbnails">${p.images.map(img=>`<img class="modal-thumb" src="${img}">`).join('')}</div></div><div class="modal-info"><h2>${p.name}</h2><div class="modal-brand">${p.brand}</div><div class="modal-price">${p.price}</div><div class="modal-desc">${p.description}</div><div><strong>Material:</strong> ${p.material}</div><div><strong>Sizes:</strong> ${p.sizes}</div><div><strong>Care:</strong> ${p.care}</div><a href="${p.instagramLink}" target="_blank" class="modal-direct">ORDER VIA INSTAGRAM DM</a></div></div>`;
+        modalBody.innerHTML = `<div class="modal-product"><div class="modal-gallery"><img class="modal-main-img" id="modal-main-img" src="${p.images[0]}"><div class="modal-thumbnails">${p.images.map(img=>`<img class="modal-thumb" src="${img}">`).join('')}</div></div><div class="modal-info"><h2>${p.name}</h2><div class="modal-brand">${p.brand}</div><div class="modal-price">${p.price}</div><div class="modal-desc">${p.description}</div><div><strong>Материал:</strong> ${p.material}</div><div><strong>Размеры:</strong> ${p.sizes}</div><div><strong>Уход:</strong> ${p.care}</div><a href="${p.instagramLink}" target="_blank" class="modal-direct">ЗАКАЗАТЬ В INSTAGRAM</a></div></div>`;
         const mainImg = document.getElementById('modal-main-img');
         document.querySelectorAll('.modal-thumb').forEach(thumb => thumb.addEventListener('click', () => mainImg.src = thumb.src));
         document.getElementById('productModal').style.display = 'flex';
