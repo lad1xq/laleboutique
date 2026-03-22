@@ -11,9 +11,10 @@
             background: #fff;
             color: #111;
             line-height: 1.4;
+            overflow-x: hidden;
         }
         .container { max-width: 1400px; margin: 0 auto; padding: 0 40px; }
-        /* Header */
+        /* Header с плавным появлением */
         header {
             position: fixed;
             top: 0;
@@ -23,9 +24,23 @@
             z-index: 1000;
             padding: 20px 0;
             border-bottom: 1px solid rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .header-inner { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.2rem; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; }
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: #111;
+        }
         .logo-img { height: 32px; width: auto; }
         .nav a {
             text-decoration: none;
@@ -34,10 +49,10 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-left: 32px;
-            transition: opacity 0.2s;
+            transition: opacity 0.3s ease;
         }
         .nav a:hover { opacity: 0.6; }
-        /* Hero */
+        /* Hero с анимацией */
         .hero {
             height: 100vh;
             display: flex;
@@ -46,11 +61,15 @@
             text-align: center;
             background: #f8f8f8;
             position: relative;
+            animation: fadeIn 1s ease-out;
         }
-        .hero-content { animation: fadeUp 1.2s ease-out; }
-        @keyframes fadeUp {
-            0% { opacity: 0; transform: translateY(40px); }
-            100% { opacity: 1; transform: translateY(0); }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: scale(1.02); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        .hero-content { animation: slideUp 1s ease-out 0.2s forwards; opacity: 0; transform: translateY(30px); }
+        @keyframes slideUp {
+            to { opacity: 1; transform: translateY(0); }
         }
         .hero-logo { font-size: 3.5rem; font-weight: 400; letter-spacing: 4px; margin-bottom: 20px; }
         .hero-logo-img { max-width: 280px; height: auto; }
@@ -75,13 +94,24 @@
             50% { transform: translateX(-50%) translateY(10px); }
         }
         /* Sections */
-        section { padding: 100px 0; border-bottom: 1px solid #f0f0f0; }
+        section {
+            padding: 100px 0;
+            border-bottom: 1px solid #f0f0f0;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
         .section-title {
             font-size: 1.8rem;
             font-weight: 400;
             text-align: center;
             text-transform: uppercase;
             margin-bottom: 60px;
+            letter-spacing: 1px;
         }
         /* Carousel */
         .carousel {
@@ -96,16 +126,20 @@
             scroll-behavior: smooth;
             scrollbar-width: none;
             padding-bottom: 20px;
+            transition: scroll-behavior 0.3s;
         }
         .carousel-container::-webkit-scrollbar { display: none; }
         .carousel-item {
             flex: 0 0 280px;
             cursor: pointer;
-            transition: opacity 0.3s;
+            transition: opacity 0.3s ease, transform 0.3s ease;
             text-decoration: none;
             color: #111;
         }
-        .carousel-item:hover { opacity: 0.8; }
+        .carousel-item:hover {
+            opacity: 0.8;
+            transform: scale(0.98);
+        }
         .carousel-img {
             width: 100%;
             aspect-ratio: 3/4;
@@ -141,9 +175,15 @@
             align-items: center;
             justify-content: center;
             font-size: 20px;
-            transition: all 0.2s;
+            transition: all 0.3s ease;
+            opacity: 0.7;
         }
-        .carousel-nav:hover { background: #111; color: white; border-color: #111; }
+        .carousel-nav:hover {
+            background: #111;
+            color: white;
+            border-color: #111;
+            opacity: 1;
+        }
         .carousel-nav.prev { left: 0; }
         .carousel-nav.next { right: 0; }
         /* Кнопка каталога */
@@ -160,9 +200,13 @@
             letter-spacing: 2px;
             font-size: 0.8rem;
             text-decoration: none;
-            transition: all 0.2s;
+            transition: all 0.3s ease;
         }
-        .catalog-btn:hover { background: #111; color: white; }
+        .catalog-btn:hover {
+            background: #111;
+            color: white;
+            transform: scale(1.02);
+        }
         /* Контакты */
         .contacts-block {
             text-align: center;
@@ -180,13 +224,21 @@
             font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 1px;
+            transition: opacity 0.3s;
         }
+        .instagram-link:hover { opacity: 0.7; }
         .map {
             margin-top: 40px;
-            height: 200px;
+            height: 250px;
             background: #f5f5f5;
             border-radius: 4px;
             overflow: hidden;
+            transition: box-shadow 0.3s;
+        }
+        .map iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
         }
         footer {
             text-align: center;
@@ -194,6 +246,7 @@
             color: #aaa;
             font-size: 0.7rem;
             text-transform: uppercase;
+            letter-spacing: 1px;
         }
         @media (max-width: 768px) {
             .container { padding: 0 20px; }
@@ -202,7 +255,7 @@
             .carousel { padding: 0 20px; }
             .carousel-item { flex: 0 0 240px; }
         }
-        /* Модалка */
+        /* Модалка (оставлена для единообразия, но на главной не используется) */
         .modal {
             display: none;
             position: fixed;
@@ -214,6 +267,7 @@
             z-index: 2000;
             justify-content: center;
             align-items: center;
+            transition: opacity 0.3s;
         }
         .modal-content {
             background: white;
@@ -222,6 +276,12 @@
             margin: 40px auto;
             position: relative;
             padding: 30px;
+            border-radius: 0;
+            animation: fadeUp 0.3s ease;
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         .close-modal {
             position: absolute;
@@ -229,12 +289,15 @@
             right: 30px;
             font-size: 28px;
             cursor: pointer;
+            color: #888;
+            transition: color 0.2s;
         }
+        .close-modal:hover { color: #111; }
         .modal-product { display: flex; flex-wrap: wrap; gap: 40px; }
         .modal-gallery { flex: 1; min-width: 280px; }
         .modal-main-img { width: 100%; margin-bottom: 15px; }
         .modal-thumbnails { display: flex; gap: 10px; flex-wrap: wrap; }
-        .modal-thumb { width: 70px; cursor: pointer; opacity: 0.6; }
+        .modal-thumb { width: 70px; cursor: pointer; opacity: 0.6; transition: opacity 0.2s; }
         .modal-thumb:hover { opacity: 1; }
         .modal-info { flex: 1; min-width: 280px; }
         .modal-info h2 { font-size: 1.5rem; font-weight: 400; margin-bottom: 10px; }
@@ -250,11 +313,13 @@
             font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 1px;
+            transition: opacity 0.2s;
         }
+        .modal-direct:hover { opacity: 0.8; }
     </style>
 </head>
 <body>
-<header>
+<header id="header">
     <div class="container header-inner">
         <div class="logo" id="logo-container">LALE BOUTIQUE</div>
         <div class="nav">
@@ -269,7 +334,7 @@
     <section id="home" class="hero">
         <div class="hero-content">
             <div id="hero-logo"><div class="hero-logo">LALE BOUTIQUE</div></div>
-            <p class="hero-description">МУЛЬТИБРЕНДОВЫЙ ШОУРУМ<br>ЖЕНСКАЯ ОДЕЖДА</p>
+            <p class="hero-description">МУЛЬТИБРЕНДОВЫЙ ШОУРУМ<br>ЖЕНСКОЙ ОДЕЖДЫ</p>
         </div>
         <div class="scroll-hint" onclick="document.getElementById('new').scrollIntoView({behavior:'smooth'})"><span></span></div>
     </section>
@@ -277,14 +342,22 @@
     <section id="new">
         <div class="container">
             <h2 class="section-title">НОВИНКИ</h2>
-            <div class="carousel"><div class="carousel-container" id="new-items"></div><div class="carousel-nav prev" onclick="scrollCarousel('new-items',-1)">←</div><div class="carousel-nav next" onclick="scrollCarousel('new-items',1)">→</div></div>
+            <div class="carousel">
+                <div class="carousel-container" id="new-items"></div>
+                <div class="carousel-nav prev" onclick="scrollCarousel('new-items', -1)">←</div>
+                <div class="carousel-nav next" onclick="scrollCarousel('new-items', 1)">→</div>
+            </div>
         </div>
     </section>
 
     <section>
         <div class="container">
             <h2 class="section-title">ХИТЫ</h2>
-            <div class="carousel"><div class="carousel-container" id="popular-items"></div><div class="carousel-nav prev" onclick="scrollCarousel('popular-items',-1)">←</div><div class="carousel-nav next" onclick="scrollCarousel('popular-items',1)">→</div></div>
+            <div class="carousel">
+                <div class="carousel-container" id="popular-items"></div>
+                <div class="carousel-nav prev" onclick="scrollCarousel('popular-items', -1)">←</div>
+                <div class="carousel-nav next" onclick="scrollCarousel('popular-items', 1)">→</div>
+            </div>
         </div>
     </section>
 
@@ -297,10 +370,12 @@
     <section id="contacts">
         <div class="container">
             <div class="contacts-block">
-                <p>ул. Дзержинского, 6</p>
+                <p>ул. Дзержинского, 8/1, Махачкала</p>
                 <p>Ежедневно 11:00 – 20:00</p>
                 <a href="https://www.instagram.com/lale_boutique05" target="_blank" class="instagram-link">@lale_boutique05</a>
-                <div class="map"><iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A1234567890abcdef&source=constructor" allowfullscreen></iframe></div>
+                <div class="map">
+                    <iframe src="https://yandex.ru/map-widget/v1/?oid=92141361734&ol=biz&z=18&pt=47.500405,42.981792,pm2rdm" width="100%" height="250" frameborder="0" allowfullscreen="true"></iframe>
+                </div>
             </div>
         </div>
     </section>
@@ -363,6 +438,22 @@
         document.getElementById('logo-container').innerHTML = `<img src="${url}" class="logo-img">`;
         document.getElementById('hero-logo').innerHTML = `<img src="${url}" class="hero-logo-img">`;
     };
+
+    // Плавное появление секций при скролле
+    const sections = document.querySelectorAll('section');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+    sections.forEach(section => observer.observe(section));
+    // Немедленно проверить видимые секции
+    sections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 100) section.classList.add('visible');
+    });
 </script>
 </body>
 </html>
