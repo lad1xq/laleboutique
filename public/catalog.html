@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lale Boutique - Каталог</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #d4af37;
+            --gold-light: #e5c76b;
+            --gold-dark: #b8962e;
+            --black: #111111;
+            --white: #ffffff;
+            --off-white: #fafafa;
+            --gray-light: #f5f5f5;
+            --gray: #888888;
+            --gray-dark: #555555;
+            --transition-fast: 0.2s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.12);
+            --shadow-gold: 0 4px 20px rgba(212, 175, 55, 0.15);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--white);
+            color: var(--black);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-weight: 400;
+        }
+
+        .container { 
+            max-width: 1400px; 
+            margin: 0 auto; 
+            padding: 0 40px; 
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 18px 0;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+            transition: all var(--transition-normal);
+        }
+
+        header.scrolled {
+            padding: 12px 0;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .logo {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.4rem;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: var(--gold);
+            transition: all var(--transition-normal);
+        }
+
+        .logo:hover {
+            color: var(--gold-dark);
+        }
+
+        .logo-img { 
+            height: 40px; 
+            width: auto; 
+            transition: transform var(--transition-normal);
+        }
+
+        .logo:hover .logo-img {
+            transform: scale(1.02);
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: var(--black);
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 8px 16px;
+            position: relative;
+            transition: all var(--transition-normal);
+        }
+
+        .nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 1px;
+            background: var(--gold);
+            transition: all var(--transition-normal);
+            transform: translateX(-50%);
+        }
+
+        .nav a:hover {
+            color: var(--gold);
+        }
+
+        .nav a:hover::after {
+            width: 60%;
+        }
+
+        .nav a.active {
+            color: var(--gold);
+        }
+
+        .nav a.active::after {
+            width: 60%;
+        }
+
+        /* Categories */
+        .categories-bar {
+            background: var(--white);
+            padding: 24px 0;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+            margin-top: 76px;
+            position: sticky;
+            top: 76px;
+            z-index: 100;
+            transition: all var(--transition-normal);
+        }
+
+        .categories-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .category-tile {
+            padding: 10px 28px;
+            background: var(--white);
+            text-decoration: none;
+            color: var(--black);
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all var(--transition-normal);
+            border-radius: 30px;
+            cursor: pointer;
+            border: 1px solid var(--gray-light);
+        }
+
+        .category-tile:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .category-tile.active {
+            background: var(--gold);
+            color: var(--white);
+            border-color: var(--gold);
+            box-shadow: var(--shadow-gold);
+        }
+
+        /* Filter Bar */
+        .filter-bar {
+            background: var(--off-white);
+            padding: 24px 0;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+        }
+
+        .filter-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .search-box {
+            flex: 2;
+            min-width: 220px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 20px;
+            padding-left: 44px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            background: var(--white);
+            font-size: 0.85rem;
+            font-family: inherit;
+            border-radius: 30px;
+            outline: none;
+            transition: all var(--transition-normal);
+        }
+
+        .search-box input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+        }
+
+        .search-box::before {
+            content: '⌕';
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1rem;
+            color: var(--gray);
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .price-filter {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .price-filter span {
+            font-size: 0.8rem;
+            color: var(--gray-dark);
+            font-weight: 500;
+        }
+
+        .price-filter input {
+            width: 100px;
+            padding: 10px 14px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            background: var(--white);
+            border-radius: 25px;
+            text-align: center;
+            font-family: inherit;
+            font-size: 0.85rem;
+            transition: all var(--transition-normal);
+            outline: none;
+        }
+
+        .price-filter input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+        }
+
+        .size-filter {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .size-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            color: var(--gray-dark);
+        }
+
+        .size-checkbox:hover {
+            color: var(--gold);
+        }
+
+        .size-checkbox input {
+            cursor: pointer;
+            accent-color: var(--gold);
+            width: 16px;
+            height: 16px;
+        }
+
+        .reset-btn {
+            background: var(--white);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: var(--gray-dark);
+            padding: 10px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-family: inherit;
+            font-weight: 500;
+            letter-spacing: 1px;
+            transition: all var(--transition-normal);
+        }
+
+        .reset-btn:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Products Grid */
+        main {
+            min-height: 60vh;
+            padding-bottom: 60px;
+            position: relative;
+        }
+
+        main::before {
+            content: '';
+            position: fixed;
+            bottom: -100px;
+            right: -100px;
+            width: 400px;
+            height: 400px;
+            background-image: url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Lale%20%D0%B2%D0%BE%D0%B4%D0%B7%D0%BD%D0%B0%D0%BA10-yoIXVWz1KqO9gzmq0n8HoKUF90QaE2.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.06;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .product-card {
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            text-align: center;
+            background: var(--white);
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .product-img-wrapper {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-img {
+            width: 100%;
+            aspect-ratio: 3/4;
+            object-fit: cover;
+            background: var(--gray-light);
+            transition: transform var(--transition-slow);
+        }
+
+        .product-card:hover .product-img {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-brand {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--gold);
+            font-weight: 500;
+            transition: color var(--transition-fast);
+        }
+
+        .product-title {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1rem;
+            margin: 8px 0;
+            font-weight: 500;
+            color: var(--black);
+        }
+
+        .product-price {
+            font-size: 0.95rem;
+            color: var(--black);
+            font-weight: 500;
+        }
+
+        .product-sizes {
+            font-size: 0.7rem;
+            color: var(--gray);
+            margin-top: 8px;
+            letter-spacing: 1px;
+        }
+
+        .no-products {
+            text-align: center;
+            grid-column: 1 / -1;
+            padding: 60px 20px;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 50px 0;
+            background: var(--black);
+            color: var(--white);
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-logo {
+            margin-bottom: 20px;
+        }
+
+        .footer-logo img {
+            height: 50px;
+            opacity: 0.9;
+        }
+
+        .footer-text {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.6;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.92);
+            z-index: 2000;
+            overflow-y: auto;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity var(--transition-normal);
+        }
+
+        .modal.show {
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: var(--white);
+            max-width: 1100px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            margin: 40px auto;
+            border-radius: 6px;
+            position: relative;
+            padding: 40px;
+            box-shadow: var(--shadow-lg);
+            transform: scale(0.95) translateY(20px);
+            transition: all var(--transition-normal);
+        }
+
+        .modal.show .modal-content {
+            transform: scale(1) translateY(0);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            font-size: 32px;
+            cursor: pointer;
+            color: var(--gray);
+            transition: all var(--transition-fast);
+            line-height: 1;
+        }
+
+        .close-modal:hover {
+            color: var(--gold);
+            transform: rotate(90deg);
+        }
+
+        .modal-product {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 50px;
+        }
+
+        .modal-gallery {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .modal-main-img {
+            width: 100%;
+            border-radius: 6px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-sm);
+            transition: transform var(--transition-fast);
+        }
+
+        .modal-thumbnails {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .modal-thumb {
+            width: 70px;
+            height: 90px;
+            object-fit: cover;
+            cursor: pointer;
+            opacity: 0.5;
+            border-radius: 4px;
+            transition: all var(--transition-fast);
+            border: 2px solid transparent;
+        }
+
+        .modal-thumb:hover {
+            opacity: 1;
+            border-color: var(--gold);
+            transform: scale(1.05);
+        }
+
+        .modal-info {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .modal-info h2 {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.8rem;
+            font-weight: 400;
+            margin-bottom: 8px;
+            color: var(--black);
+        }
+
+        .modal-brand {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--gold);
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .modal-price {
+            font-size: 1.4rem;
+            font-weight: 500;
+            margin: 24px 0;
+            color: var(--black);
+        }
+
+        .modal-desc {
+            color: var(--gray-dark);
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+
+        .modal-sizes, .modal-material, .modal-care {
+            margin: 12px 0;
+            font-size: 0.85rem;
+            color: var(--gray-dark);
+        }
+
+        .modal-sizes strong, .modal-material strong, .modal-care strong {
+            color: var(--black);
+            font-weight: 500;
+        }
+
+        .modal-direct {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--white);
+            text-decoration: none;
+            padding: 14px 36px;
+            margin-top: 28px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 4px;
+            transition: all var(--transition-normal);
+            box-shadow: var(--shadow-gold);
+        }
+
+        .modal-direct:hover {
+            background: var(--gold-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(212, 175, 55, 0.25);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .container { padding: 0 30px; }
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 0 20px; }
+
+            header { padding: 14px 0; }
+
+            .header-inner {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .nav { gap: 4px; }
+            .nav a { padding: 6px 12px; font-size: 0.7rem; }
+
+            .categories-bar {
+                margin-top: 100px;
+                top: 100px;
+                padding: 16px 0;
+            }
+
+            .category-tile {
+                padding: 8px 20px;
+                font-size: 0.7rem;
+            }
+
+            .filter-row {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 16px;
+            }
+
+            .filter-group {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .products-grid {
+                gap: 24px;
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            }
+
+            .modal-content { padding: 24px; }
+            .modal-product { gap: 30px; }
+        }
+
+        @media (max-width: 480px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 16px;
+            }
+
+            .product-info { padding: 14px; }
+            .product-title { font-size: 0.9rem; }
+
+            .category-tile {
+                padding: 6px 16px;
+                font-size: 0.65rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<header id="header">
+    <div class="container header-inner">
+        <a href="index.html" class="logo" id="logo-container">
+            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Lale%20%D0%B2%D0%BE%D0%B4%D0%B7%D0%BD%D0%B0%D0%BA7-qKgvcxzi3W5BvRkuoMn32VNhXPoeO4.png" class="logo-img" alt="Lale Boutique">
+        </a>
+        <nav class="nav">
+            <a href="index.html">Главная</a>
+            <a href="catalog.html" class="active">Каталог</a>
+            <a href="index.html#contacts">Контакты</a>
+        </nav>
+    </div>
+</header>
+
+<!-- Categories -->
+<div class="categories-bar">
+    <div class="container">
+        <div class="categories-grid" id="categories-grid"></div>
+    </div>
+</div>
+
+<!-- Filters -->
+<div class="filter-bar">
+    <div class="container">
+        <div class="filter-row">
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="Поиск по названию...">
+            </div>
+            <div class="filter-group">
+                <div class="price-filter">
+                    <span>Цена (₽):</span>
+                    <input type="number" id="price-min" placeholder="от" value="0">
+                    <input type="number" id="price-max" placeholder="до" value="20000">
+                </div>
+                <div class="size-filter" id="size-filter-container"></div>
+                <button id="reset-filters" class="reset-btn">Сбросить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<main>
+    <div class="container">
+        <div class="products-grid" id="products-grid"></div>
+    </div>
+</main>
+
+<footer>
+    <div class="container">
+        <div class="footer-logo">
+            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Lale%20%D0%B2%D0%BE%D0%B4%D0%B7%D0%BD%D0%B0%D0%BA8-yqmZDSzv6hNaNJnFtHTDSNPEo8q2oK.png" alt="Lale">
+        </div>
+        <p class="footer-text">© 2025 Lale Boutique. Все права защищены.</p>
+    </div>
+</footer>
+
+<!-- Modal -->
+<div id="productModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <div id="modal-body"></div>
+    </div>
+</div>
+
+<script>
+    // Products data
+    const products = [
+        { id:1, name:"Платье с цветочным принтом", brand:"Lale", price:5900, priceStr:"5 900 ₽", category:"Платья", sizes:["XS","S","M","L"], images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Dress+1"], description:"Элегантное платье-футляр с цветочным принтом. Подчеркнёт силуэт и добавит женственности.", material:"95% хлопок, 5% эластан", care:"Деликатная стирка при 30°", instagramLink:"https://www.instagram.com/lale_boutique05/", modelHeight:"175 см", madeIn:"Италия" },
+        { id:2, name:"Платье миди с открытой спиной", brand:"Lale", price:7200, priceStr:"7 200 ₽", category:"Платья", sizes:["S","M","L"], images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Dress+2"], description:"Платье миди с изящным вырезом на спине. Идеально для летних вечеров.", material:"100% вискоза", care:"Ручная стирка, не отбеливать", instagramLink:"https://www.instagram.com/lale_boutique05/", modelHeight:"175 см", madeIn:"Италия" },
+        { id:3, name:"Шелковое платье макси", brand:"Mila Grace", price:12500, priceStr:"12 500 ₽", category:"Платья", sizes:["XS","S","M"], images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Dress+3"], description:"Роскошное платье макси из натурального шелка. Струящийся крой и элегантность.", material:"100% шелк", care:"Химчистка", instagramLink:"https://www.instagram.com/lale_boutique05/", modelHeight:"175 см", madeIn:"Италия" },
+        { id:4, name:"Комбинезон с поясом", brand:"Verona", price:8900, priceStr:"8 900 ₽", category:"Комбинезоны", sizes:["S","M","L"], images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Jumpsuit+1"], description:"Стильный комбинезон с поясом. Подходит для офиса и повседневной жизни.", material:"65% полиэстер, 35% хлопок", care:"Машинная стирка 40°", instagramLink:"https://www.instagram.com/lale_boutique05/", modelHeight:"175 см", madeIn:"Италия" },
+        { id:5, name:"Льняной комбинезон", brand:"Lale", price:7500, priceStr:"7 500 ₽", category:"Комбинезоны", sizes:["S","M","L"], images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Jumpsuit+2"], description:"Легкий льняной комбинезон для жарких дней.", material:"100% лен", care:"Деликатная стирка", instagramLink:"https://www.instagram.com/lale_boutique05/", modelHeight:"175 см", madeIn:"Италия" },
+        { id:6, name:"Кожаная юбка-карандаш", brand:"Mila Grace", price:6900, priceStr:"6 900 ₽", category:"Юбки", sizes:["S","M","L"], images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Skirt+1"], description:"Эко-кожаная юбка-карандаш. Универсальная база.", material:"100% полиуретан", care:"Влажная чистка", instagramLink:"https://www.instagram.com/lale_boutique05/", modelHeight:"175 см", madeIn:"Италия" },
+        { id:7, name:"Плиссированная юбка миди", brand:"Verona", price:5500, priceStr:"5 500 ₽", category:"Юбки", sizes:["XS","S","M"], images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Skirt+2"], description:"Легкая плиссированная юбка миди.", material:"100% полиэстер", care:"Деликатная стирка", instagramLink:"https://www.instagram.com/lale_boutique05/", modelHeight:"175 см", madeIn:"Италия" },
+        { id:8, name:"Шелковая блуза", brand:"Mila Grace", price:7800, priceStr:"7 800 ₽", category:"Блузы", sizes:["S","M","L"], images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Blouse+1"], description:"Атласная блуза с шелковистым блеском.", material:"100% полиэстер", care:"Ручная стирка", instagramLink:"https://www.instagram.com/lale_boutique05/", modelHeight:"175 см", madeIn:"Италия" }
+    ];
+
+    // Get unique categories and sizes
+    const categories = [...new Set(products.map(p => p.category))];
+    const allSizes = [...new Set(products.flatMap(p => p.sizes))].sort();
+
+    // Filter state
+    let activeCategory = categories[0];
+    let searchQuery = '';
+    let minPrice = 0;
+    let maxPrice = 20000;
+    let selectedSizes = [];
+
+    // DOM elements
+    const categoriesGrid = document.getElementById('categories-grid');
+    const productsGrid = document.getElementById('products-grid');
+    const searchInput = document.getElementById('search-input');
+    const priceMinInput = document.getElementById('price-min');
+    const priceMaxInput = document.getElementById('price-max');
+    const resetBtn = document.getElementById('reset-filters');
+    const sizeFilterContainer = document.getElementById('size-filter-container');
+    const modal = document.getElementById('productModal');
+    const modalBody = document.getElementById('modal-body');
+    const closeModal = document.querySelector('.close-modal');
+
+    // Render categories
+    function renderCategories() {
+        categoriesGrid.innerHTML = categories.map(cat => `
+            <div class="category-tile ${cat === activeCategory ? 'active' : ''}" data-category="${cat}">
+                ${cat}
+            </div>
+        `).join('');
+        document.querySelectorAll('.category-tile').forEach(tile => {
+            tile.addEventListener('click', () => {
+                activeCategory = tile.dataset.category;
+                renderCategories();
+                applyFilters();
+            });
+        });
+    }
+
+    // Render size filters
+    function renderSizeFilters() {
+        sizeFilterContainer.innerHTML = allSizes.map(size => `
+            <label class="size-checkbox">
+                <input type="checkbox" value="${size}" ${selectedSizes.includes(size) ? 'checked' : ''}> ${size}
+            </label>
+        `).join('');
+        document.querySelectorAll('.size-checkbox input').forEach(cb => {
+            cb.addEventListener('change', () => {
+                selectedSizes = Array.from(document.querySelectorAll('.size-checkbox input:checked')).map(cb => cb.value);
+                applyFilters();
+            });
+        });
+    }
+
+    // Filter products
+    function getFilteredProducts() {
+        let filtered = products.filter(p => p.category === activeCategory);
+        if (searchQuery.trim() !== '') {
+            filtered = filtered.filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase()));
+        }
+        filtered = filtered.filter(p => p.price >= minPrice && p.price <= maxPrice);
+        if (selectedSizes.length > 0) {
+            filtered = filtered.filter(p => p.sizes.some(s => selectedSizes.includes(s)));
+        }
+        return filtered;
+    }
+
+    // Render products
+    function renderProducts() {
+        const filtered = getFilteredProducts();
+        productsGrid.innerHTML = '';
+        if (filtered.length === 0) {
+            productsGrid.innerHTML = '<p class="no-products">Нет товаров, соответствующих фильтрам</p>';
+            return;
+        }
+        filtered.forEach((product, index) => {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.setAttribute('data-id', product.id);
+            card.style.animationDelay = `${index * 0.08}s`;
+            card.innerHTML = `
+                <div class="product-img-wrapper">
+                    <img class="product-img" src="${product.images[0]}" alt="${product.name}">
+                </div>
+                <div class="product-info">
+                    <div class="product-brand">${product.brand}</div>
+                    <div class="product-title">${product.name}</div>
+                    <div class="product-price">${product.priceStr}</div>
+                    <div class="product-sizes">${product.sizes.join(', ')}</div>
+                </div>
+            `;
+            card.addEventListener('click', () => openModal(product.id));
+            productsGrid.appendChild(card);
+        });
+    }
+
+    // Open modal
+    function openModal(productId) {
+        const product = products.find(p => p.id === productId);
+        if (!product) return;
+        let thumbnailsHtml = '';
+        if (product.images && product.images.length > 1) {
+            thumbnailsHtml = `<div class="modal-thumbnails">${product.images.map(img => `<img class="modal-thumb" src="${img}" alt="thumbnail">`).join('')}</div>`;
+        }
+        modalBody.innerHTML = `
+            <div class="modal-product">
+                <div class="modal-gallery">
+                    <img class="modal-main-img" id="modal-main-img" src="${product.images[0]}" alt="${product.name}">
+                    ${thumbnailsHtml}
+                </div>
+                <div class="modal-info">
+                    <div class="modal-brand">${product.brand}</div>
+                    <h2>${product.name}</h2>
+                    <div class="modal-price">${product.priceStr}</div>
+                    <div class="modal-desc">${product.description}</div>
+                    <div class="modal-material"><strong>Материал:</strong> ${product.material}</div>
+                    <div class="modal-sizes"><strong>Размеры:</strong> ${product.sizes.join(', ')}</div>
+                    <div class="modal-care"><strong>Уход:</strong> ${product.care}</div>
+                    <a href="${product.instagramLink}" target="_blank" class="modal-direct">Заказать в Instagram</a>
+                </div>
+            </div>
+        `;
+        const mainImg = document.getElementById('modal-main-img');
+        const thumbs = document.querySelectorAll('.modal-thumb');
+        thumbs.forEach(thumb => {
+            thumb.addEventListener('click', () => {
+                mainImg.src = thumb.src;
+            });
+        });
+        modal.classList.add('show');
+        modal.style.display = 'flex';
+    }
+
+    function closeModalFunc() {
+        modal.classList.remove('show');
+        setTimeout(() => {
+            modal.style.display = 'none';
+        }, 300);
+    }
+
+    // Apply filters
+    function applyFilters() {
+        minPrice = parseInt(priceMinInput.value) || 0;
+        maxPrice = parseInt(priceMaxInput.value) || 20000;
+        if (maxPrice < minPrice) maxPrice = minPrice;
+        searchQuery = searchInput.value;
+        renderProducts();
+    }
+
+    function resetFilters() {
+        searchInput.value = '';
+        priceMinInput.value = 0;
+        priceMaxInput.value = 20000;
+        selectedSizes = [];
+        renderSizeFilters();
+        searchQuery = '';
+        minPrice = 0;
+        maxPrice = 20000;
+        applyFilters();
+    }
+
+    function init() {
+        renderCategories();
+        renderSizeFilters();
+        priceMinInput.value = 0;
+        priceMaxInput.value = 20000;
+        searchInput.addEventListener('input', applyFilters);
+        priceMinInput.addEventListener('input', applyFilters);
+        priceMaxInput.addEventListener('input', applyFilters);
+        resetBtn.addEventListener('click', resetFilters);
+        closeModal.addEventListener('click', closeModalFunc);
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) closeModalFunc();
+        });
+        applyFilters();
+    }
+
+    // Header scroll effect
+    window.addEventListener('scroll', () => {
+        const header = document.getElementById('header');
+        if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+
+    init();
+</script>
+</body>
+</html>
