@@ -51,7 +51,8 @@
         }
         .category-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(220px, 260px));
+            justify-content: center;
             gap: 40px;
         }
         .category-card {
@@ -74,7 +75,8 @@
         }
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(260px, 280px));
+            justify-content: center;
             gap: 40px;
             margin-top: 20px;
         }
@@ -82,12 +84,16 @@
             cursor: pointer;
             transition: opacity 0.3s;
             text-align: center;
+            width: 100%;
+            max-width: 280px;
+            margin: 0 auto;
         }
         .product-card:hover { opacity: 0.8; }
         .product-img {
             width: 100%;
             aspect-ratio: 3/4;
             object-fit: cover;
+            background: #f5f5f5;
             margin-bottom: 15px;
         }
         .product-brand {
@@ -98,6 +104,11 @@
         }
         .product-title { font-size: 0.85rem; margin: 5px 0; }
         .product-price { font-size: 0.85rem; color: #666; }
+        .product-sizes {
+            font-size: 0.7rem;
+            color: #888;
+            margin: 5px 0;
+        }
         .btn-direct {
             background: none;
             border: 1px solid #111;
@@ -132,7 +143,7 @@
             .container { padding: 0 20px; }
             .category-grid, .products-grid { gap: 25px; }
         }
-        /* Модалка (та же) */
+        /* Модалка */
         .modal {
             display: none;
             position: fixed;
@@ -198,12 +209,12 @@
     <div class="container">
         <div id="category-view">
             <div class="category-section">
-                <h2 class="category-title">CHOOSE CATEGORY</h2>
+                <h2 class="category-title">КАТЕГОРИИ</h2>
                 <div class="category-grid" id="categories-grid"></div>
             </div>
         </div>
         <div id="products-view" class="hidden">
-            <a href="#" id="back-to-categories" class="back-link">← BACK TO CATEGORIES</a>
+            <a href="#" id="back-to-categories" class="back-link">← НАЗАД К КАТЕГОРИЯМ</a>
             <div id="products-container"></div>
         </div>
     </div>
@@ -214,14 +225,14 @@
 
 <script>
     const products = [
-        { id:1, name:"Flower Print Dress", brand:"Lale", price:"€159", category:"Dresses", images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Dress+1"], description:"Elegant fitted dress", material:"95% Cotton", sizes:"XS,S,M,L", care:"Gentle wash", instagramLink:"https://www.instagram.com/lale_boutique05/" },
-        { id:2, name:"Open Back Midi", brand:"Lale", price:"€195", category:"Dresses", images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Dress+2"], description:"Open back midi", material:"Viscose", sizes:"S,M,L", care:"Hand wash", instagramLink:"https://www.instagram.com/lale_boutique05/" },
-        { id:3, name:"Silk Maxi", brand:"Mila Grace", price:"€345", category:"Dresses", images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Dress+3"], description:"Silk maxi dress", material:"Silk", sizes:"XS,S,M", care:"Dry clean", instagramLink:"https://www.instagram.com/lale_boutique05/" },
-        { id:4, name:"Belted Jumpsuit", brand:"Verona", price:"€245", category:"Jumpsuits", images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Jumpsuit+1"], description:"Belted jumpsuit", material:"Polyester/Cotton", sizes:"S,M,L", care:"Machine wash", instagramLink:"https://www.instagram.com/lale_boutique05/" },
-        { id:5, name:"Linen Jumpsuit", brand:"Lale", price:"€205", category:"Jumpsuits", images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Jumpsuit+2"], description:"Linen jumpsuit", material:"Linen", sizes:"S,M,L", care:"Gentle", instagramLink:"https://www.instagram.com/lale_boutique05/" },
-        { id:6, name:"Leather Pencil Skirt", brand:"Mila Grace", price:"€189", category:"Skirts", images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Skirt+1"], description:"Eco leather skirt", material:"Polyurethane", sizes:"S,M,L", care:"Wipe", instagramLink:"https://www.instagram.com/lale_boutique05/" },
-        { id:7, name:"Pleated Midi Skirt", brand:"Verona", price:"€149", category:"Skirts", images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Skirt+2"], description:"Pleated skirt", material:"Polyester", sizes:"XS,S,M", care:"Gentle", instagramLink:"https://www.instagram.com/lale_boutique05/" },
-        { id:8, name:"Silk Blouse", brand:"Mila Grace", price:"€215", category:"Blouses", images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Blouse+1"], description:"Silk blouse", material:"Polyester", sizes:"S,M,L", care:"Hand wash", instagramLink:"https://www.instagram.com/lale_boutique05/" }
+        { id:1, name:"Платье с цветочным принтом", brand:"Lale", price:"5 900 ₽", category:"Платья", sizes:"XS, S, M, L", images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Dress+1"], description:"Элегантное платье-футляр", material:"95% хлопок, 5% эластан", care:"Деликатная стирка", instagramLink:"https://www.instagram.com/lale_boutique05/" },
+        { id:2, name:"Платье миди с открытой спиной", brand:"Lale", price:"7 200 ₽", category:"Платья", sizes:"S, M, L", images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Dress+2"], description:"Платье с открытой спиной", material:"Вискоза 100%", care:"Ручная стирка", instagramLink:"https://www.instagram.com/lale_boutique05/" },
+        { id:3, name:"Шелковое платье макси", brand:"Mila Grace", price:"12 500 ₽", category:"Платья", sizes:"XS, S, M", images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Dress+3"], description:"Шелковое платье макси", material:"Натуральный шелк", care:"Химчистка", instagramLink:"https://www.instagram.com/lale_boutique05/" },
+        { id:4, name:"Комбинезон с поясом", brand:"Verona", price:"8 900 ₽", category:"Комбинезоны", sizes:"S, M, L", images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Jumpsuit+1"], description:"Стильный комбинезон", material:"Полиэстер 65%, хлопок 35%", care:"Машинная стирка", instagramLink:"https://www.instagram.com/lale_boutique05/" },
+        { id:5, name:"Льняной комбинезон", brand:"Lale", price:"7 500 ₽", category:"Комбинезоны", sizes:"S, M, L", images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Jumpsuit+2"], description:"Льняной комбинезон", material:"Лен 100%", care:"Деликатная стирка", instagramLink:"https://www.instagram.com/lale_boutique05/" },
+        { id:6, name:"Кожаная юбка-карандаш", brand:"Mila Grace", price:"6 900 ₽", category:"Юбки", sizes:"S, M, L", images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Skirt+1"], description:"Эко-кожа", material:"Полиуретан", care:"Влажная чистка", instagramLink:"https://www.instagram.com/lale_boutique05/" },
+        { id:7, name:"Плиссированная юбка миди", brand:"Verona", price:"5 500 ₽", category:"Юбки", sizes:"XS, S, M", images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Skirt+2"], description:"Плиссированная юбка", material:"Полиэстер 100%", care:"Деликатная стирка", instagramLink:"https://www.instagram.com/lale_boutique05/" },
+        { id:8, name:"Шелковая блуза", brand:"Mila Grace", price:"7 800 ₽", category:"Блузы", sizes:"S, M, L", images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Blouse+1"], description:"Атласная блуза", material:"Полиэстер 100%", care:"Ручная стирка", instagramLink:"https://www.instagram.com/lale_boutique05/" }
     ];
 
     const categories = [...new Set(products.map(p => p.category))];
@@ -248,7 +259,8 @@
                 <div class="product-brand">${p.brand}</div>
                 <div class="product-title">${p.name}</div>
                 <div class="product-price">${p.price}</div>
-                <button class="btn-direct" data-id="${p.id}">ORDER VIA DM</button>
+                <div class="product-sizes">${p.sizes}</div>
+                <button class="btn-direct" data-id="${p.id}">ЗАКАЗАТЬ В DM</button>
             </div>
         `).join('');
         document.querySelectorAll('.product-card').forEach(card => {
@@ -270,7 +282,7 @@
         const p = products.find(p=>p.id===id);
         if(!p) return;
         const modalBody = document.getElementById('modal-body');
-        modalBody.innerHTML = `<div class="modal-product"><div class="modal-gallery"><img class="modal-main-img" id="modal-main-img" src="${p.images[0]}"><div class="modal-thumbnails">${p.images.map(img=>`<img class="modal-thumb" src="${img}">`).join('')}</div></div><div class="modal-info"><h2>${p.name}</h2><div class="modal-brand">${p.brand}</div><div class="modal-price">${p.price}</div><div class="modal-desc">${p.description}</div><div><strong>Material:</strong> ${p.material}</div><div><strong>Sizes:</strong> ${p.sizes}</div><div><strong>Care:</strong> ${p.care}</div><a href="${p.instagramLink}" target="_blank" class="modal-direct">ORDER VIA INSTAGRAM DM</a></div></div>`;
+        modalBody.innerHTML = `<div class="modal-product"><div class="modal-gallery"><img class="modal-main-img" id="modal-main-img" src="${p.images[0]}"><div class="modal-thumbnails">${p.images.map(img=>`<img class="modal-thumb" src="${img}">`).join('')}</div></div><div class="modal-info"><h2>${p.name}</h2><div class="modal-brand">${p.brand}</div><div class="modal-price">${p.price}</div><div class="modal-desc">${p.description}</div><div><strong>Материал:</strong> ${p.material}</div><div><strong>Размеры:</strong> ${p.sizes}</div><div><strong>Уход:</strong> ${p.care}</div><a href="${p.instagramLink}" target="_blank" class="modal-direct">ЗАКАЗАТЬ В INSTAGRAM</a></div></div>`;
         const mainImg = document.getElementById('modal-main-img');
         document.querySelectorAll('.modal-thumb').forEach(thumb => thumb.addEventListener('click', () => mainImg.src = thumb.src));
         document.getElementById('productModal').style.display = 'flex';
