@@ -12,13 +12,9 @@
             color: #111;
             line-height: 1.4;
             overflow-x: hidden;
-            background-image: url('watermark.png');
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-attachment: fixed;
-            background-size: 30%;
         }
-        .container { max-width: 1400px; margin: 0 auto; padding: 0 40px; position: relative; z-index: 1; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 40px; }
+        /* Header */
         header {
             position: fixed;
             top: 0;
@@ -30,8 +26,23 @@
             border-bottom: 1px solid rgba(0,0,0,0.05);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .header-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
-        .logo img { height: 40px; width: auto; display: block; }
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: #B8860B; /* золотой */
+            transition: color 0.3s;
+        }
+        .logo:hover { color: #8B0000; } /* тёмно-красный */
         .nav a {
             text-decoration: none;
             color: #111;
@@ -39,16 +50,17 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-left: 32px;
-            transition: opacity 0.3s ease;
+            transition: color 0.3s ease;
         }
-        .nav a:hover { opacity: 0.6; }
+        .nav a:hover { color: #B8860B; }
+        /* Hero */
         .hero {
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            background: transparent;
+            background: #f8f8f8;
             position: relative;
             animation: fadeIn 1s ease-out;
         }
@@ -60,11 +72,18 @@
         @keyframes slideUp {
             to { opacity: 1; transform: translateY(0); }
         }
-        .hero-logo img { max-width: 280px; width: 100%; height: auto; }
+        .hero-logo {
+            font-size: 3.5rem;
+            font-weight: 400;
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+            color: #B8860B;
+            text-transform: uppercase;
+        }
         .hero-description {
             font-size: 0.9rem;
             max-width: 500px;
-            margin: 20px auto 0;
+            margin: 0 auto;
             color: #666;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -81,13 +100,14 @@
             0%,100% { transform: translateX(-50%) translateY(0); }
             50% { transform: translateX(-50%) translateY(10px); }
         }
+        /* Sections */
         section {
             padding: 100px 0;
             border-bottom: 1px solid #f0f0f0;
             opacity: 0;
             transform: translateY(20px);
             transition: opacity 0.8s ease, transform 0.8s ease;
-            background: rgba(255,255,255,0.95);
+            background: #fff;
         }
         section.visible {
             opacity: 1;
@@ -100,7 +120,23 @@
             text-transform: uppercase;
             margin-bottom: 60px;
             letter-spacing: 1px;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+            padding-bottom: 15px;
         }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background: #B8860B;
+        }
+        /* Carousel */
         .carousel {
             position: relative;
             overflow: hidden;
@@ -119,13 +155,13 @@
         .carousel-item {
             flex: 0 0 280px;
             cursor: pointer;
-            transition: opacity 0.3s ease, transform 0.3s ease;
+            transition: transform 0.3s ease, opacity 0.3s ease;
             text-decoration: none;
             color: #111;
         }
         .carousel-item:hover {
-            opacity: 0.8;
-            transform: scale(0.98);
+            opacity: 0.9;
+            transform: translateY(-5px);
         }
         .carousel-img {
             width: 100%;
@@ -133,6 +169,7 @@
             object-fit: cover;
             background: #f5f5f5;
             margin-bottom: 15px;
+            border-radius: 4px;
         }
         .carousel-info { text-align: center; }
         .carousel-brand {
@@ -141,8 +178,8 @@
             letter-spacing: 1px;
             color: #888;
         }
-        .carousel-title { font-size: 0.85rem; margin: 5px 0; }
-        .carousel-price { font-size: 0.85rem; color: #666; }
+        .carousel-title { font-size: 0.85rem; margin: 5px 0; font-weight: 500; }
+        .carousel-price { font-size: 0.85rem; color: #B8860B; }
         .carousel-sizes {
             font-size: 0.7rem;
             color: #888;
@@ -166,13 +203,14 @@
             opacity: 0.7;
         }
         .carousel-nav:hover {
-            background: #111;
+            background: #B8860B;
             color: white;
-            border-color: #111;
+            border-color: #B8860B;
             opacity: 1;
         }
         .carousel-nav.prev { left: 0; }
         .carousel-nav.next { right: 0; }
+        /* Кнопка каталога */
         .catalog-btn {
             display: block;
             width: 200px;
@@ -189,10 +227,12 @@
             transition: all 0.3s ease;
         }
         .catalog-btn:hover {
-            background: #111;
+            background: #B8860B;
+            border-color: #B8860B;
             color: white;
             transform: scale(1.02);
         }
+        /* Контакты */
         .contacts-block {
             text-align: center;
             max-width: 500px;
@@ -202,16 +242,16 @@
         .instagram-link {
             display: inline-block;
             margin-top: 20px;
-            color: #111;
+            color: #B8860B;
             text-decoration: none;
-            border-bottom: 1px solid #111;
+            border-bottom: 1px solid #B8860B;
             padding-bottom: 4px;
             font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             transition: opacity 0.3s;
         }
-        .instagram-link:hover { opacity: 0.7; }
+        .instagram-link:hover { opacity: 0.7; color: #8B0000; border-color: #8B0000; }
         .map {
             margin-top: 40px;
             height: 250px;
@@ -232,20 +272,16 @@
             font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-            background: rgba(255,255,255,0.95);
-        }
-        footer img {
-            height: 30px;
-            margin-bottom: 10px;
-            opacity: 0.6;
+            border-top: 1px solid #f0f0f0;
         }
         @media (max-width: 768px) {
             .container { padding: 0 20px; }
-            .hero-logo img { max-width: 200px; }
+            .hero-logo { font-size: 2rem; }
             .section-title { font-size: 1.4rem; margin-bottom: 40px; }
             .carousel { padding: 0 20px; }
             .carousel-item { flex: 0 0 240px; }
         }
+        /* Модалка (оставлена, но на главной не используется) */
         .modal {
             display: none;
             position: fixed;
@@ -305,15 +341,13 @@
             letter-spacing: 1px;
             transition: opacity 0.2s;
         }
-        .modal-direct:hover { opacity: 0.8; }
+        .modal-direct:hover { background: #B8860B; }
     </style>
 </head>
 <body>
 <header id="header">
     <div class="container header-inner">
-        <div class="logo">
-            <img src="logo-header.png" alt="Lale Boutique">
-        </div>
+        <div class="logo">LALE BOUTIQUE</div>
         <div class="nav">
             <a href="#home">HOME</a>
             <a href="catalog.html">SHOP</a>
@@ -325,9 +359,7 @@
 <main>
     <section id="home" class="hero">
         <div class="hero-content">
-            <div class="hero-logo">
-                <img src="logo-hero.png" alt="Lale Boutique">
-            </div>
+            <div class="hero-logo">LALE BOUTIQUE</div>
             <p class="hero-description">МУЛЬТИБРЕНДОВЫЙ ШОУРУМ<br>ЖЕНСКАЯ ОДЕЖДА</p>
         </div>
         <div class="scroll-hint" onclick="document.getElementById('new').scrollIntoView({behavior:'smooth'})"><span></span></div>
@@ -375,10 +407,7 @@
     </section>
 </main>
 <footer>
-    <div class="container">
-        <img src="logo-footer.png" alt="Lale Boutique" style="height: 30px; opacity: 0.6; margin-bottom: 10px;">
-        <div>LALE BOUTIQUE © 2025</div>
-    </div>
+    <div class="container">LALE BOUTIQUE © 2025</div>
 </footer>
 
 <div id="productModal" class="modal"><div class="modal-content"><span class="close-modal">&times;</span><div id="modal-body"></div></div></div>
