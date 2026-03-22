@@ -11,9 +11,13 @@
             background: #fff;
             color: #111;
             line-height: 1.4;
+            background-image: url('watermark.png');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            background-size: 30%;
         }
-        .container { max-width: 1400px; margin: 0 auto; padding: 0 40px; }
-        /* Header */
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 40px; position: relative; z-index: 1; }
         header {
             position: fixed;
             top: 0;
@@ -23,26 +27,9 @@
             z-index: 1000;
             padding: 20px 0;
             border-bottom: 1px solid rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
         }
-        .header-inner {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-        .logo {
-            font-size: 1.2rem;
-            font-weight: 500;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            text-decoration: none;
-            color: #111;
-            transition: opacity 0.3s ease;
-        }
-        .logo:hover { opacity: 0.7; }
-        .logo-img { height: 32px; width: auto; }
+        .header-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+        .logo img { height: 40px; width: auto; display: block; }
         .nav a {
             text-decoration: none;
             color: #111;
@@ -50,15 +37,14 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-left: 32px;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.2s;
         }
         .nav a:hover { opacity: 0.6; }
-        /* Категории плитками */
+        main { padding-top: 100px; }
         .categories-bar {
-            background: white;
+            background: rgba(255,255,255,0.95);
             padding: 20px 0;
             border-bottom: 1px solid #f0f0f0;
-            margin-top: 80px;
         }
         .categories-grid {
             display: flex;
@@ -74,23 +60,16 @@
             font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-            transition: all 0.3s ease;
+            transition: all 0.2s;
             border-radius: 30px;
             cursor: pointer;
-            border: 1px solid transparent;
         }
-        .category-tile:hover {
-            background: #111;
-            color: white;
-            transform: translateY(-2px);
-        }
-        .category-tile.active {
+        .category-tile:hover, .category-tile.active {
             background: #111;
             color: white;
         }
-        /* Панель поиска и фильтров */
         .filter-bar {
-            background: white;
+            background: rgba(255,255,255,0.95);
             padding: 20px 0;
             border-bottom: 1px solid #f0f0f0;
         }
@@ -101,10 +80,6 @@
             align-items: flex-end;
             justify-content: space-between;
         }
-        .search-box {
-            flex: 2;
-            min-width: 200px;
-        }
         .search-box input {
             width: 100%;
             padding: 10px 15px;
@@ -112,16 +87,6 @@
             font-size: 0.9rem;
             border-radius: 30px;
             outline: none;
-            transition: all 0.3s ease;
-        }
-        .search-box input:focus {
-            border-color: #111;
-            box-shadow: 0 0 0 2px rgba(0,0,0,0.05);
-        }
-        .filter-group {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
         }
         .price-filter {
             display: flex;
@@ -134,10 +99,6 @@
             border: 1px solid #ddd;
             border-radius: 20px;
             text-align: center;
-            transition: all 0.3s ease;
-        }
-        .price-filter input:focus {
-            border-color: #111;
         }
         .size-filter {
             display: flex;
@@ -150,11 +111,6 @@
             align-items: center;
             gap: 5px;
             font-size: 0.8rem;
-            transition: opacity 0.3s ease;
-            cursor: pointer;
-        }
-        .size-checkbox input {
-            cursor: pointer;
         }
         .reset-btn {
             background: none;
@@ -163,13 +119,11 @@
             border-radius: 30px;
             cursor: pointer;
             font-size: 0.8rem;
-            transition: all 0.3s ease;
+            transition: all 0.2s;
         }
         .reset-btn:hover {
             background: #f0f0f0;
-            transform: translateY(-1px);
         }
-        /* Сетка товаров */
         .products-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -178,41 +132,22 @@
         }
         .product-card {
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: opacity 0.3s;
             text-align: center;
-            animation: fadeInUp 0.5s ease forwards;
         }
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        .product-card:hover {
-            transform: translateY(-8px);
-            opacity: 0.9;
-        }
+        .product-card:hover { opacity: 0.8; }
         .product-img {
             width: 100%;
             aspect-ratio: 3/4;
             object-fit: cover;
             background: #f5f5f5;
             margin-bottom: 15px;
-            transition: transform 0.3s ease;
-        }
-        .product-card:hover .product-img {
-            transform: scale(1.02);
         }
         .product-brand {
             font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             color: #888;
-            transition: color 0.3s ease;
         }
         .product-title { font-size: 0.85rem; margin: 5px 0; }
         .product-price { font-size: 0.85rem; color: #666; }
@@ -228,14 +163,18 @@
             font-size: 0.7rem;
             text-transform: uppercase;
             margin-top: 40px;
+            background: rgba(255,255,255,0.95);
+        }
+        footer img {
+            height: 30px;
+            margin-bottom: 10px;
+            opacity: 0.6;
         }
         @media (max-width: 768px) {
             .container { padding: 0 20px; }
             .products-grid { gap: 25px; }
             .filter-row { flex-direction: column; align-items: stretch; }
         }
-
-        /* Модальное окно */
         .modal {
             display: none;
             position: fixed;
@@ -248,11 +187,6 @@
             overflow-y: auto;
             justify-content: center;
             align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .modal.show {
-            opacity: 1;
         }
         .modal-content {
             background: white;
@@ -262,11 +196,6 @@
             border-radius: 0;
             position: relative;
             padding: 30px;
-            transform: scale(0.95);
-            transition: transform 0.3s ease;
-        }
-        .modal.show .modal-content {
-            transform: scale(1);
         }
         .close-modal {
             position: absolute;
@@ -275,7 +204,6 @@
             font-size: 28px;
             cursor: pointer;
             color: #888;
-            transition: color 0.2s;
         }
         .close-modal:hover { color: #111; }
         .modal-product {
@@ -283,56 +211,15 @@
             flex-wrap: wrap;
             gap: 40px;
         }
-        .modal-gallery {
-            flex: 1;
-            min-width: 280px;
-        }
-        .modal-main-img {
-            width: 100%;
-            margin-bottom: 15px;
-            transition: transform 0.2s;
-        }
-        .modal-thumbnails {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        .modal-thumb {
-            width: 70px;
-            cursor: pointer;
-            opacity: 0.6;
-            transition: opacity 0.2s, transform 0.2s;
-        }
-        .modal-thumb:hover {
-            opacity: 1;
-            transform: scale(1.05);
-        }
-        .modal-info {
-            flex: 1;
-            min-width: 280px;
-        }
-        .modal-info h2 {
-            font-size: 1.5rem;
-            font-weight: 400;
-            margin-bottom: 10px;
-        }
-        .modal-brand {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #888;
-            margin-bottom: 15px;
-        }
-        .modal-price {
-            font-size: 1.2rem;
-            margin: 20px 0;
-        }
-        .modal-desc {
-            margin: 20px 0;
-            color: #666;
-            font-size: 0.9rem;
-            line-height: 1.5;
-        }
+        .modal-gallery { flex: 1; min-width: 280px; }
+        .modal-main-img { width: 100%; margin-bottom: 15px; }
+        .modal-thumbnails { display: flex; gap: 10px; flex-wrap: wrap; }
+        .modal-thumb { width: 70px; cursor: pointer; opacity: 0.6; }
+        .modal-thumb:hover { opacity: 1; }
+        .modal-info { flex: 1; min-width: 280px; }
+        .modal-info h2 { font-size: 1.5rem; font-weight: 400; margin-bottom: 10px; }
+        .modal-brand { font-size: 0.7rem; text-transform: uppercase; color: #888; margin-bottom: 15px; }
+        .modal-price { font-size: 1.2rem; margin: 20px 0; }
         .modal-direct {
             display: inline-block;
             background: #111;
@@ -343,23 +230,15 @@
             font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-            transition: all 0.3s ease;
-        }
-        .modal-direct:hover {
-            opacity: 0.8;
-            transform: translateY(-2px);
-        }
-        .modal-sizes, .modal-material, .modal-care {
-            margin: 10px 0;
-            font-size: 0.85rem;
-            color: #555;
         }
     </style>
 </head>
 <body>
 <header>
     <div class="container header-inner">
-        <a href="index.html" class="logo" id="logo-container">LALE BOUTIQUE</a>
+        <a href="index.html" class="logo">
+            <img src="logo-header.png" alt="Lale Boutique">
+        </a>
         <div class="nav">
             <a href="index.html">HOME</a>
             <a href="catalog.html">SHOP</a>
@@ -368,14 +247,12 @@
     </div>
 </header>
 
-<!-- Категории плитками -->
 <div class="categories-bar">
     <div class="container">
         <div class="categories-grid" id="categories-grid"></div>
     </div>
 </div>
 
-<!-- Поиск и фильтры -->
 <div class="filter-bar">
     <div class="container">
         <div class="filter-row">
@@ -388,9 +265,7 @@
                     <input type="number" id="price-min" placeholder="от" value="0">
                     <input type="number" id="price-max" placeholder="до" value="20000">
                 </div>
-                <div class="size-filter" id="size-filter-container">
-                    <!-- Размеры будут добавлены динамически -->
-                </div>
+                <div class="size-filter" id="size-filter-container"></div>
                 <button id="reset-filters" class="reset-btn">Сбросить</button>
             </div>
         </div>
@@ -402,9 +277,14 @@
         <div class="products-grid" id="products-grid"></div>
     </div>
 </main>
-<footer><div class="container">LALE BOUTIQUE © 2025</div></footer>
 
-<!-- Модальное окно -->
+<footer>
+    <div class="container">
+        <img src="logo-footer.png" alt="Lale Boutique" style="height: 30px; opacity: 0.6; margin-bottom: 10px;">
+        <div>LALE BOUTIQUE © 2025</div>
+    </div>
+</footer>
+
 <div id="productModal" class="modal">
     <div class="modal-content">
         <span class="close-modal">&times;</span>
@@ -413,31 +293,26 @@
 </div>
 
 <script>
-    // ----- ТОВАРЫ (полная база) -----
     const products = [
-        { id:1, name:"Платье с цветочным принтом", brand:"Lale", price:5900, priceStr:"5 900 ₽", category:"Платья", sizes:["XS","S","M","L"], images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Dress+1"], description:"Элегантное платье-футляр с цветочным принтом. Подчеркнёт силуэт и добавит женственности.", material:"95% хлопок, 5% эластан", care:"Деликатная стирка при 30°", instagramLink:"https://www.instagram.com/lale_boutique05/", modelHeight:"175 см", madeIn:"Италия" },
-        { id:2, name:"Платье миди с открытой спиной", brand:"Lale", price:7200, priceStr:"7 200 ₽", category:"Платья", sizes:["S","M","L"], images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Dress+2"], description:"Платье миди с изящным вырезом на спине. Идеально для летних вечеров.", material:"100% вискоза", care:"Ручная стирка, не отбеливать", instagramLink:"https://www.instagram.com/lale_boutique05/", modelHeight:"175 см", madeIn:"Италия" },
-        { id:3, name:"Шелковое платье макси", brand:"Mila Grace", price:12500, priceStr:"12 500 ₽", category:"Платья", sizes:["XS","S","M"], images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Dress+3"], description:"Роскошное платье макси из натурального шелка. Струящийся крой и элегантность.", material:"100% шелк", care:"Химчистка", instagramLink:"https://www.instagram.com/lale_boutique05/", modelHeight:"175 см", madeIn:"Италия" },
-        { id:4, name:"Комбинезон с поясом", brand:"Verona", price:8900, priceStr:"8 900 ₽", category:"Комбинезоны", sizes:["S","M","L"], images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Jumpsuit+1"], description:"Стильный комбинезон с поясом. Подходит для офиса и повседневной жизни.", material:"65% полиэстер, 35% хлопок", care:"Машинная стирка 40°", instagramLink:"https://www.instagram.com/lale_boutique05/", modelHeight:"175 см", madeIn:"Италия" },
-        { id:5, name:"Льняной комбинезон", brand:"Lale", price:7500, priceStr:"7 500 ₽", category:"Комбинезоны", sizes:["S","M","L"], images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Jumpsuit+2"], description:"Легкий льняной комбинезон для жарких дней.", material:"100% лен", care:"Деликатная стирка", instagramLink:"https://www.instagram.com/lale_boutique05/", modelHeight:"175 см", madeIn:"Италия" },
-        { id:6, name:"Кожаная юбка-карандаш", brand:"Mila Grace", price:6900, priceStr:"6 900 ₽", category:"Юбки", sizes:["S","M","L"], images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Skirt+1"], description:"Эко-кожаная юбка-карандаш. Универсальная база.", material:"100% полиуретан", care:"Влажная чистка", instagramLink:"https://www.instagram.com/lale_boutique05/", modelHeight:"175 см", madeIn:"Италия" },
-        { id:7, name:"Плиссированная юбка миди", brand:"Verona", price:5500, priceStr:"5 500 ₽", category:"Юбки", sizes:["XS","S","M"], images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Skirt+2"], description:"Легкая плиссированная юбка миди.", material:"100% полиэстер", care:"Деликатная стирка", instagramLink:"https://www.instagram.com/lale_boutique05/", modelHeight:"175 см", madeIn:"Италия" },
-        { id:8, name:"Шелковая блуза", brand:"Mila Grace", price:7800, priceStr:"7 800 ₽", category:"Блузы", sizes:["S","M","L"], images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Blouse+1"], description:"Атласная блуза с шелковистым блеском.", material:"100% полиэстер", care:"Ручная стирка", instagramLink:"https://www.instagram.com/lale_boutique05/", modelHeight:"175 см", madeIn:"Италия" }
+        { id:1, name:"Платье с цветочным принтом", brand:"Lale", price:5900, priceStr:"5 900 ₽", category:"Платья", sizes:["XS","S","M","L"], images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Dress+1"], description:"Элегантное платье-футляр", material:"95% хлопок, 5% эластан", care:"Деликатная стирка", instagramLink:"https://www.instagram.com/lale_boutique05/" },
+        { id:2, name:"Платье миди с открытой спиной", brand:"Lale", price:7200, priceStr:"7 200 ₽", category:"Платья", sizes:["S","M","L"], images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Dress+2"], description:"Платье с открытой спиной", material:"Вискоза 100%", care:"Ручная стирка", instagramLink:"https://www.instagram.com/lale_boutique05/" },
+        { id:3, name:"Шелковое платье макси", brand:"Mila Grace", price:12500, priceStr:"12 500 ₽", category:"Платья", sizes:["XS","S","M"], images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Dress+3"], description:"Шелковое платье макси", material:"Натуральный шелк", care:"Химчистка", instagramLink:"https://www.instagram.com/lale_boutique05/" },
+        { id:4, name:"Комбинезон с поясом", brand:"Verona", price:8900, priceStr:"8 900 ₽", category:"Комбинезоны", sizes:["S","M","L"], images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Jumpsuit+1"], description:"Стильный комбинезон", material:"Полиэстер 65%, хлопок 35%", care:"Машинная стирка", instagramLink:"https://www.instagram.com/lale_boutique05/" },
+        { id:5, name:"Льняной комбинезон", brand:"Lale", price:7500, priceStr:"7 500 ₽", category:"Комбинезоны", sizes:["S","M","L"], images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Jumpsuit+2"], description:"Льняной комбинезон", material:"Лен 100%", care:"Деликатная стирка", instagramLink:"https://www.instagram.com/lale_boutique05/" },
+        { id:6, name:"Кожаная юбка-карандаш", brand:"Mila Grace", price:6900, priceStr:"6 900 ₽", category:"Юбки", sizes:["S","M","L"], images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Skirt+1"], description:"Эко-кожа", material:"Полиуретан", care:"Влажная чистка", instagramLink:"https://www.instagram.com/lale_boutique05/" },
+        { id:7, name:"Плиссированная юбка миди", brand:"Verona", price:5500, priceStr:"5 500 ₽", category:"Юбки", sizes:["XS","S","M"], images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Skirt+2"], description:"Плиссированная юбка", material:"Полиэстер 100%", care:"Деликатная стирка", instagramLink:"https://www.instagram.com/lale_boutique05/" },
+        { id:8, name:"Шелковая блуза", brand:"Mila Grace", price:7800, priceStr:"7 800 ₽", category:"Блузы", sizes:["S","M","L"], images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Blouse+1"], description:"Атласная блуза", material:"Полиэстер 100%", care:"Ручная стирка", instagramLink:"https://www.instagram.com/lale_boutique05/" }
     ];
 
-    // Получаем все категории
     const categories = [...new Set(products.map(p => p.category))];
-    // Получаем все возможные размеры
     const allSizes = [...new Set(products.flatMap(p => p.sizes))].sort();
 
-    // Состояние фильтров
     let activeCategory = categories[0];
     let searchQuery = '';
     let minPrice = 0;
     let maxPrice = 20000;
     let selectedSizes = [];
 
-    // DOM элементы
     const categoriesGrid = document.getElementById('categories-grid');
     const productsGrid = document.getElementById('products-grid');
     const searchInput = document.getElementById('search-input');
@@ -445,11 +320,7 @@
     const priceMaxInput = document.getElementById('price-max');
     const resetBtn = document.getElementById('reset-filters');
     const sizeFilterContainer = document.getElementById('size-filter-container');
-    const modal = document.getElementById('productModal');
-    const modalBody = document.getElementById('modal-body');
-    const closeModal = document.querySelector('.close-modal');
 
-    // Функция для отрисовки плиток категорий
     function renderCategories() {
         categoriesGrid.innerHTML = categories.map(cat => `
             <div class="category-tile ${cat === activeCategory ? 'active' : ''}" data-category="${cat}">
@@ -465,7 +336,6 @@
         });
     }
 
-    // Отрисовка фильтра по размерам
     function renderSizeFilters() {
         sizeFilterContainer.innerHTML = allSizes.map(size => `
             <label class="size-checkbox">
@@ -480,20 +350,14 @@
         });
     }
 
-    // Фильтрация товаров
     function getFilteredProducts() {
         let filtered = products.filter(p => p.category === activeCategory);
-        if (searchQuery.trim() !== '') {
-            filtered = filtered.filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase()));
-        }
+        if (searchQuery.trim() !== '') filtered = filtered.filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase()));
         filtered = filtered.filter(p => p.price >= minPrice && p.price <= maxPrice);
-        if (selectedSizes.length > 0) {
-            filtered = filtered.filter(p => p.sizes.some(s => selectedSizes.includes(s)));
-        }
+        if (selectedSizes.length > 0) filtered = filtered.filter(p => p.sizes.some(s => selectedSizes.includes(s)));
         return filtered;
     }
 
-    // Отрисовка сетки товаров с плавным появлением
     function renderProducts() {
         const filtered = getFilteredProducts();
         productsGrid.innerHTML = '';
@@ -501,11 +365,10 @@
             productsGrid.innerHTML = '<p style="text-align:center; grid-column:1/-1;">Нет товаров, соответствующих фильтрам</p>';
             return;
         }
-        filtered.forEach((product, index) => {
+        filtered.forEach(product => {
             const card = document.createElement('div');
             card.className = 'product-card';
             card.setAttribute('data-id', product.id);
-            card.style.animationDelay = `${index * 0.05}s`; // небольшая задержка для эффекта каскада
             card.innerHTML = `
                 <img class="product-img" src="${product.images[0]}" alt="${product.name}">
                 <div class="product-brand">${product.brand}</div>
@@ -518,51 +381,16 @@
         });
     }
 
-    // Открыть модальное окно
-    function openModal(productId) {
-        const product = products.find(p => p.id === productId);
-        if (!product) return;
-        let thumbnailsHtml = '';
-        if (product.images && product.images.length > 1) {
-            thumbnailsHtml = `<div class="modal-thumbnails">${product.images.map(img => `<img class="modal-thumb" src="${img}" alt="thumbnail">`).join('')}</div>`;
-        }
-        modalBody.innerHTML = `
-            <div class="modal-product">
-                <div class="modal-gallery">
-                    <img class="modal-main-img" id="modal-main-img" src="${product.images[0]}" alt="${product.name}">
-                    ${thumbnailsHtml}
-                </div>
-                <div class="modal-info">
-                    <h2>${product.name}</h2>
-                    <div class="modal-brand">${product.brand}</div>
-                    <div class="modal-price">${product.priceStr}</div>
-                    <div class="modal-desc">${product.description}</div>
-                    <div class="modal-material"><strong>Материал:</strong> ${product.material}</div>
-                    <div class="modal-sizes"><strong>Размеры:</strong> ${product.sizes.join(', ')}</div>
-                    <div class="modal-care"><strong>Уход:</strong> ${product.care}</div>
-                    <a href="${product.instagramLink}" target="_blank" class="modal-direct">ЗАКАЗАТЬ В INSTAGRAM</a>
-                </div>
-            </div>
-        `;
+    function openModal(id) {
+        const p = products.find(p=>p.id===id);
+        if(!p) return;
+        const modalBody = document.getElementById('modal-body');
+        modalBody.innerHTML = `<div class="modal-product"><div class="modal-gallery"><img class="modal-main-img" id="modal-main-img" src="${p.images[0]}"><div class="modal-thumbnails">${p.images.map(img=>`<img class="modal-thumb" src="${img}">`).join('')}</div></div><div class="modal-info"><h2>${p.name}</h2><div class="modal-brand">${p.brand}</div><div class="modal-price">${p.priceStr}</div><div class="modal-desc">${p.description}</div><div><strong>Материал:</strong> ${p.material}</div><div><strong>Размеры:</strong> ${p.sizes.join(', ')}</div><div><strong>Уход:</strong> ${p.care}</div><a href="${p.instagramLink}" target="_blank" class="modal-direct">ЗАКАЗАТЬ В INSTAGRAM</a></div></div>`;
         const mainImg = document.getElementById('modal-main-img');
-        const thumbs = document.querySelectorAll('.modal-thumb');
-        thumbs.forEach(thumb => {
-            thumb.addEventListener('click', () => {
-                mainImg.src = thumb.src;
-            });
-        });
-        modal.classList.add('show');
-        modal.style.display = 'flex';
+        document.querySelectorAll('.modal-thumb').forEach(thumb => thumb.addEventListener('click', () => mainImg.src = thumb.src));
+        document.getElementById('productModal').style.display = 'flex';
     }
 
-    function closeModalFunc() {
-        modal.classList.remove('show');
-        setTimeout(() => {
-            modal.style.display = 'none';
-        }, 300);
-    }
-
-    // Применить фильтры
     function applyFilters() {
         minPrice = parseInt(priceMinInput.value) || 0;
         maxPrice = parseInt(priceMaxInput.value) || 20000;
@@ -592,13 +420,11 @@
         priceMinInput.addEventListener('input', applyFilters);
         priceMaxInput.addEventListener('input', applyFilters);
         resetBtn.addEventListener('click', resetFilters);
-        closeModal.addEventListener('click', closeModalFunc);
-        window.addEventListener('click', (e) => {
-            if (e.target === modal) closeModalFunc();
-        });
         applyFilters();
     }
 
+    document.querySelector('.close-modal')?.addEventListener('click', () => document.getElementById('productModal').style.display = 'none');
+    window.addEventListener('click', e => { if(e.target === document.getElementById('productModal')) document.getElementById('productModal').style.display = 'none'; });
     init();
 </script>
 </body>
