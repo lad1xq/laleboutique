@@ -23,6 +23,7 @@
             z-index: 1000;
             padding: 20px 0;
             border-bottom: 1px solid rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
         }
         .header-inner {
             display: flex;
@@ -38,7 +39,9 @@
             text-transform: uppercase;
             text-decoration: none;
             color: #111;
+            transition: opacity 0.3s ease;
         }
+        .logo:hover { opacity: 0.7; }
         .logo-img { height: 32px; width: auto; }
         .nav a {
             text-decoration: none;
@@ -47,7 +50,7 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-left: 32px;
-            transition: opacity 0.2s;
+            transition: opacity 0.3s ease;
         }
         .nav a:hover { opacity: 0.6; }
         /* Категории плитками */
@@ -55,7 +58,7 @@
             background: white;
             padding: 20px 0;
             border-bottom: 1px solid #f0f0f0;
-            margin-top: 80px; /* отступ под фиксированную шапку */
+            margin-top: 80px;
         }
         .categories-grid {
             display: flex;
@@ -71,47 +74,145 @@
             font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-            transition: all 0.2s;
+            transition: all 0.3s ease;
             border-radius: 30px;
+            cursor: pointer;
+            border: 1px solid transparent;
         }
         .category-tile:hover {
             background: #111;
             color: white;
+            transform: translateY(-2px);
         }
         .category-tile.active {
             background: #111;
             color: white;
         }
-        /* Двухколоночный макет */
-        .catalog-layout {
-            display: flex;
-            gap: 60px;
-            margin-top: 40px;
+        /* Панель поиска и фильтров */
+        .filter-bar {
+            background: white;
+            padding: 20px 0;
+            border-bottom: 1px solid #f0f0f0;
         }
-        .products-grid {
+        .filter-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: flex-end;
+            justify-content: space-between;
+        }
+        .search-box {
             flex: 2;
+            min-width: 200px;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            font-size: 0.9rem;
+            border-radius: 30px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        .search-box input:focus {
+            border-color: #111;
+            box-shadow: 0 0 0 2px rgba(0,0,0,0.05);
+        }
+        .filter-group {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .price-filter {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .price-filter input {
+            width: 90px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .price-filter input:focus {
+            border-color: #111;
+        }
+        .size-filter {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .size-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.8rem;
+            transition: opacity 0.3s ease;
+            cursor: pointer;
+        }
+        .size-checkbox input {
+            cursor: pointer;
+        }
+        .reset-btn {
+            background: none;
+            border: 1px solid #ddd;
+            padding: 8px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+        .reset-btn:hover {
+            background: #f0f0f0;
+            transform: translateY(-1px);
+        }
+        /* Сетка товаров */
+        .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             gap: 40px;
+            margin-top: 40px;
         }
         .product-card {
             cursor: pointer;
-            transition: opacity 0.3s;
+            transition: all 0.3s ease;
             text-align: center;
+            animation: fadeInUp 0.5s ease forwards;
         }
-        .product-card:hover { opacity: 0.8; }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .product-card:hover {
+            transform: translateY(-8px);
+            opacity: 0.9;
+        }
         .product-img {
             width: 100%;
             aspect-ratio: 3/4;
             object-fit: cover;
             background: #f5f5f5;
             margin-bottom: 15px;
+            transition: transform 0.3s ease;
+        }
+        .product-card:hover .product-img {
+            transform: scale(1.02);
         }
         .product-brand {
             font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             color: #888;
+            transition: color 0.3s ease;
         }
         .product-title { font-size: 0.85rem; margin: 5px 0; }
         .product-price { font-size: 0.85rem; color: #666; }
@@ -120,123 +221,6 @@
             color: #888;
             margin-top: 5px;
         }
-        /* Детальная панель справа */
-        .product-detail {
-            flex: 1;
-            position: sticky;
-            top: 120px;
-            align-self: start;
-        }
-        .detail-gallery {
-            margin-bottom: 20px;
-        }
-        .detail-main-img {
-            width: 100%;
-            aspect-ratio: 3/4;
-            object-fit: cover;
-            background: #f5f5f5;
-            margin-bottom: 10px;
-        }
-        .detail-thumbnails {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-        .detail-thumb {
-            width: 60px;
-            cursor: pointer;
-            opacity: 0.6;
-            transition: opacity 0.2s;
-        }
-        .detail-thumb:hover { opacity: 1; }
-        .detail-brand {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #888;
-            margin: 10px 0 5px;
-        }
-        .detail-title {
-            font-size: 1.2rem;
-            font-weight: 500;
-            margin-bottom: 5px;
-        }
-        .detail-price {
-            font-size: 1.2rem;
-            margin: 15px 0;
-        }
-        .detail-description {
-            margin: 15px 0;
-            color: #444;
-            font-size: 0.9rem;
-            line-height: 1.5;
-        }
-        .detail-sizes, .detail-material, .detail-care {
-            margin: 10px 0;
-            font-size: 0.85rem;
-            color: #555;
-        }
-        .size-buttons {
-            display: flex;
-            gap: 8px;
-            margin: 10px 0 20px;
-            flex-wrap: wrap;
-        }
-        .size-btn {
-            background: none;
-            border: 1px solid #ddd;
-            padding: 6px 12px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            transition: all 0.2s;
-        }
-        .size-btn:hover {
-            border-color: #111;
-        }
-        .instagram-order-btn {
-            display: inline-block;
-            background: #111;
-            color: white;
-            text-decoration: none;
-            padding: 12px 24px;
-            margin-top: 20px;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border: none;
-            cursor: pointer;
-            width: 100%;
-            text-align: center;
-        }
-        .instagram-order-btn:hover {
-            opacity: 0.8;
-        }
-        hr {
-            margin: 20px 0;
-            border: none;
-            border-top: 1px solid #eee;
-        }
-        .delivery-info {
-            font-size: 0.75rem;
-            color: #888;
-            margin-top: 20px;
-        }
-        @media (max-width: 900px) {
-            .catalog-layout {
-                flex-direction: column;
-            }
-            .product-detail {
-                position: static;
-                margin-top: 40px;
-            }
-            .container {
-                padding: 0 20px;
-            }
-            .products-grid {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-                gap: 25px;
-            }
-        }
         footer {
             text-align: center;
             padding: 40px 0;
@@ -244,6 +228,131 @@
             font-size: 0.7rem;
             text-transform: uppercase;
             margin-top: 40px;
+        }
+        @media (max-width: 768px) {
+            .container { padding: 0 20px; }
+            .products-grid { gap: 25px; }
+            .filter-row { flex-direction: column; align-items: stretch; }
+        }
+
+        /* Модальное окно */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 2000;
+            overflow-y: auto;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .modal.show {
+            opacity: 1;
+        }
+        .modal-content {
+            background: white;
+            max-width: 1100px;
+            width: 90%;
+            margin: 40px auto;
+            border-radius: 0;
+            position: relative;
+            padding: 30px;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+        .modal.show .modal-content {
+            transform: scale(1);
+        }
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #888;
+            transition: color 0.2s;
+        }
+        .close-modal:hover { color: #111; }
+        .modal-product {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+        .modal-gallery {
+            flex: 1;
+            min-width: 280px;
+        }
+        .modal-main-img {
+            width: 100%;
+            margin-bottom: 15px;
+            transition: transform 0.2s;
+        }
+        .modal-thumbnails {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .modal-thumb {
+            width: 70px;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+        .modal-thumb:hover {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+        .modal-info {
+            flex: 1;
+            min-width: 280px;
+        }
+        .modal-info h2 {
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 10px;
+        }
+        .modal-brand {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #888;
+            margin-bottom: 15px;
+        }
+        .modal-price {
+            font-size: 1.2rem;
+            margin: 20px 0;
+        }
+        .modal-desc {
+            margin: 20px 0;
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        .modal-direct {
+            display: inline-block;
+            background: #111;
+            color: white;
+            text-decoration: none;
+            padding: 12px 30px;
+            margin-top: 20px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+        .modal-direct:hover {
+            opacity: 0.8;
+            transform: translateY(-2px);
+        }
+        .modal-sizes, .modal-material, .modal-care {
+            margin: 10px 0;
+            font-size: 0.85rem;
+            color: #555;
         }
     </style>
 </head>
@@ -259,143 +368,238 @@
     </div>
 </header>
 
-<!-- Блок категорий плитками -->
+<!-- Категории плитками -->
 <div class="categories-bar">
     <div class="container">
         <div class="categories-grid" id="categories-grid"></div>
     </div>
 </div>
 
-<main>
+<!-- Поиск и фильтры -->
+<div class="filter-bar">
     <div class="container">
-        <div class="catalog-layout">
-            <!-- Левая колонка: сетка товаров -->
-            <div class="products-grid" id="products-grid"></div>
-            <!-- Правая колонка: детали выбранного товара -->
-            <div class="product-detail" id="product-detail">
-                <div style="text-align: center; color: #888;">Выберите товар</div>
+        <div class="filter-row">
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="Поиск по названию...">
+            </div>
+            <div class="filter-group">
+                <div class="price-filter">
+                    <span>Цена (₽):</span>
+                    <input type="number" id="price-min" placeholder="от" value="0">
+                    <input type="number" id="price-max" placeholder="до" value="20000">
+                </div>
+                <div class="size-filter" id="size-filter-container">
+                    <!-- Размеры будут добавлены динамически -->
+                </div>
+                <button id="reset-filters" class="reset-btn">Сбросить</button>
             </div>
         </div>
+    </div>
+</div>
+
+<main>
+    <div class="container">
+        <div class="products-grid" id="products-grid"></div>
     </div>
 </main>
 <footer><div class="container">LALE BOUTIQUE © 2025</div></footer>
 
+<!-- Модальное окно -->
+<div id="productModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <div id="modal-body"></div>
+    </div>
+</div>
+
 <script>
     // ----- ТОВАРЫ (полная база) -----
     const products = [
-        { id:1, name:"Платье с цветочным принтом", brand:"Lale", price:"5 900 ₽", category:"Платья", sizes:["XS","S","M","L"], images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Dress+1"], description:"Элегантное платье-футляр с цветочным принтом. Подчеркнёт силуэт и добавит женственности.", material:"95% хлопок, 5% эластан", care:"Деликатная стирка при 30°", instagramLink:"https://www.instagram.com/lale_boutique05/", modelHeight:"175 см", madeIn:"Италия" },
-        { id:2, name:"Платье миди с открытой спиной", brand:"Lale", price:"7 200 ₽", category:"Платья", sizes:["S","M","L"], images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Dress+2"], description:"Платье миди с изящным вырезом на спине. Идеально для летних вечеров.", material:"100% вискоза", care:"Ручная стирка, не отбеливать", instagramLink:"https://www.instagram.com/lale_boutique05/", modelHeight:"175 см", madeIn:"Италия" },
-        { id:3, name:"Шелковое платье макси", brand:"Mila Grace", price:"12 500 ₽", category:"Платья", sizes:["XS","S","M"], images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Dress+3"], description:"Роскошное платье макси из натурального шелка. Струящийся крой и элегантность.", material:"100% шелк", care:"Химчистка", instagramLink:"https://www.instagram.com/lale_boutique05/", modelHeight:"175 см", madeIn:"Италия" },
-        { id:4, name:"Комбинезон с поясом", brand:"Verona", price:"8 900 ₽", category:"Комбинезоны", sizes:["S","M","L"], images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Jumpsuit+1"], description:"Стильный комбинезон с поясом. Подходит для офиса и повседневной жизни.", material:"65% полиэстер, 35% хлопок", care:"Машинная стирка 40°", instagramLink:"https://www.instagram.com/lale_boutique05/", modelHeight:"175 см", madeIn:"Италия" },
-        { id:5, name:"Льняной комбинезон", brand:"Lale", price:"7 500 ₽", category:"Комбинезоны", sizes:["S","M","L"], images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Jumpsuit+2"], description:"Легкий льняной комбинезон для жарких дней.", material:"100% лен", care:"Деликатная стирка", instagramLink:"https://www.instagram.com/lale_boutique05/", modelHeight:"175 см", madeIn:"Италия" },
-        { id:6, name:"Кожаная юбка-карандаш", brand:"Mila Grace", price:"6 900 ₽", category:"Юбки", sizes:["S","M","L"], images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Skirt+1"], description:"Эко-кожаная юбка-карандаш. Универсальная база.", material:"100% полиуретан", care:"Влажная чистка", instagramLink:"https://www.instagram.com/lale_boutique05/", modelHeight:"175 см", madeIn:"Италия" },
-        { id:7, name:"Плиссированная юбка миди", brand:"Verona", price:"5 500 ₽", category:"Юбки", sizes:["XS","S","M"], images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Skirt+2"], description:"Легкая плиссированная юбка миди.", material:"100% полиэстер", care:"Деликатная стирка", instagramLink:"https://www.instagram.com/lale_boutique05/", modelHeight:"175 см", madeIn:"Италия" },
-        { id:8, name:"Шелковая блуза", brand:"Mila Grace", price:"7 800 ₽", category:"Блузы", sizes:["S","M","L"], images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Blouse+1"], description:"Атласная блуза с шелковистым блеском.", material:"100% полиэстер", care:"Ручная стирка", instagramLink:"https://www.instagram.com/lale_boutique05/", modelHeight:"175 см", madeIn:"Италия" }
+        { id:1, name:"Платье с цветочным принтом", brand:"Lale", price:5900, priceStr:"5 900 ₽", category:"Платья", sizes:["XS","S","M","L"], images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Dress+1"], description:"Элегантное платье-футляр с цветочным принтом. Подчеркнёт силуэт и добавит женственности.", material:"95% хлопок, 5% эластан", care:"Деликатная стирка при 30°", instagramLink:"https://www.instagram.com/lale_boutique05/", modelHeight:"175 см", madeIn:"Италия" },
+        { id:2, name:"Платье миди с открытой спиной", brand:"Lale", price:7200, priceStr:"7 200 ₽", category:"Платья", sizes:["S","M","L"], images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Dress+2"], description:"Платье миди с изящным вырезом на спине. Идеально для летних вечеров.", material:"100% вискоза", care:"Ручная стирка, не отбеливать", instagramLink:"https://www.instagram.com/lale_boutique05/", modelHeight:"175 см", madeIn:"Италия" },
+        { id:3, name:"Шелковое платье макси", brand:"Mila Grace", price:12500, priceStr:"12 500 ₽", category:"Платья", sizes:["XS","S","M"], images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Dress+3"], description:"Роскошное платье макси из натурального шелка. Струящийся крой и элегантность.", material:"100% шелк", care:"Химчистка", instagramLink:"https://www.instagram.com/lale_boutique05/", modelHeight:"175 см", madeIn:"Италия" },
+        { id:4, name:"Комбинезон с поясом", brand:"Verona", price:8900, priceStr:"8 900 ₽", category:"Комбинезоны", sizes:["S","M","L"], images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Jumpsuit+1"], description:"Стильный комбинезон с поясом. Подходит для офиса и повседневной жизни.", material:"65% полиэстер, 35% хлопок", care:"Машинная стирка 40°", instagramLink:"https://www.instagram.com/lale_boutique05/", modelHeight:"175 см", madeIn:"Италия" },
+        { id:5, name:"Льняной комбинезон", brand:"Lale", price:7500, priceStr:"7 500 ₽", category:"Комбинезоны", sizes:["S","M","L"], images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Jumpsuit+2"], description:"Легкий льняной комбинезон для жарких дней.", material:"100% лен", care:"Деликатная стирка", instagramLink:"https://www.instagram.com/lale_boutique05/", modelHeight:"175 см", madeIn:"Италия" },
+        { id:6, name:"Кожаная юбка-карандаш", brand:"Mila Grace", price:6900, priceStr:"6 900 ₽", category:"Юбки", sizes:["S","M","L"], images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Skirt+1"], description:"Эко-кожаная юбка-карандаш. Универсальная база.", material:"100% полиуретан", care:"Влажная чистка", instagramLink:"https://www.instagram.com/lale_boutique05/", modelHeight:"175 см", madeIn:"Италия" },
+        { id:7, name:"Плиссированная юбка миди", brand:"Verona", price:5500, priceStr:"5 500 ₽", category:"Юбки", sizes:["XS","S","M"], images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Skirt+2"], description:"Легкая плиссированная юбка миди.", material:"100% полиэстер", care:"Деликатная стирка", instagramLink:"https://www.instagram.com/lale_boutique05/", modelHeight:"175 см", madeIn:"Италия" },
+        { id:8, name:"Шелковая блуза", brand:"Mila Grace", price:7800, priceStr:"7 800 ₽", category:"Блузы", sizes:["S","M","L"], images:["https://placehold.co/800x1000/f5f5f5/aaa?text=Blouse+1"], description:"Атласная блуза с шелковистым блеском.", material:"100% полиэстер", care:"Ручная стирка", instagramLink:"https://www.instagram.com/lale_boutique05/", modelHeight:"175 см", madeIn:"Италия" }
     ];
 
     // Получаем все категории
     const categories = [...new Set(products.map(p => p.category))];
+    // Получаем все возможные размеры
+    const allSizes = [...new Set(products.flatMap(p => p.sizes))].sort();
 
-    // Получаем параметр category из URL
-    const urlParams = new URLSearchParams(window.location.search);
-    let activeCategory = urlParams.get('category');
-    if (!activeCategory || !categories.includes(activeCategory)) {
-        activeCategory = categories[0]; // по умолчанию первая категория
-    }
+    // Состояние фильтров
+    let activeCategory = categories[0];
+    let searchQuery = '';
+    let minPrice = 0;
+    let maxPrice = 20000;
+    let selectedSizes = [];
 
-    // Рендер плиток категорий
-    function renderCategoryTiles() {
-        const container = document.getElementById('categories-grid');
-        container.innerHTML = categories.map(cat => `
-            <a href="?category=${encodeURIComponent(cat)}" class="category-tile ${cat === activeCategory ? 'active' : ''}">
+    // DOM элементы
+    const categoriesGrid = document.getElementById('categories-grid');
+    const productsGrid = document.getElementById('products-grid');
+    const searchInput = document.getElementById('search-input');
+    const priceMinInput = document.getElementById('price-min');
+    const priceMaxInput = document.getElementById('price-max');
+    const resetBtn = document.getElementById('reset-filters');
+    const sizeFilterContainer = document.getElementById('size-filter-container');
+    const modal = document.getElementById('productModal');
+    const modalBody = document.getElementById('modal-body');
+    const closeModal = document.querySelector('.close-modal');
+
+    // Функция для отрисовки плиток категорий
+    function renderCategories() {
+        categoriesGrid.innerHTML = categories.map(cat => `
+            <div class="category-tile ${cat === activeCategory ? 'active' : ''}" data-category="${cat}">
                 ${cat}
-            </a>
+            </div>
         `).join('');
+        document.querySelectorAll('.category-tile').forEach(tile => {
+            tile.addEventListener('click', () => {
+                activeCategory = tile.dataset.category;
+                renderCategories();
+                applyFilters();
+            });
+        });
     }
 
-    // Рендер товаров выбранной категории
+    // Отрисовка фильтра по размерам
+    function renderSizeFilters() {
+        sizeFilterContainer.innerHTML = allSizes.map(size => `
+            <label class="size-checkbox">
+                <input type="checkbox" value="${size}" ${selectedSizes.includes(size) ? 'checked' : ''}> ${size}
+            </label>
+        `).join('');
+        document.querySelectorAll('.size-checkbox input').forEach(cb => {
+            cb.addEventListener('change', () => {
+                selectedSizes = Array.from(document.querySelectorAll('.size-checkbox input:checked')).map(cb => cb.value);
+                applyFilters();
+            });
+        });
+    }
+
+    // Фильтрация товаров
+    function getFilteredProducts() {
+        let filtered = products.filter(p => p.category === activeCategory);
+        if (searchQuery.trim() !== '') {
+            filtered = filtered.filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase()));
+        }
+        filtered = filtered.filter(p => p.price >= minPrice && p.price <= maxPrice);
+        if (selectedSizes.length > 0) {
+            filtered = filtered.filter(p => p.sizes.some(s => selectedSizes.includes(s)));
+        }
+        return filtered;
+    }
+
+    // Отрисовка сетки товаров с плавным появлением
     function renderProducts() {
-        const filtered = products.filter(p => p.category === activeCategory);
-        const grid = document.getElementById('products-grid');
-        grid.innerHTML = '';
+        const filtered = getFilteredProducts();
+        productsGrid.innerHTML = '';
         if (filtered.length === 0) {
-            grid.innerHTML = '<p style="text-align:center; grid-column:1/-1;">Нет товаров в этой категории</p>';
+            productsGrid.innerHTML = '<p style="text-align:center; grid-column:1/-1;">Нет товаров, соответствующих фильтрам</p>';
             return;
         }
-        filtered.forEach(product => {
+        filtered.forEach((product, index) => {
             const card = document.createElement('div');
             card.className = 'product-card';
             card.setAttribute('data-id', product.id);
+            card.style.animationDelay = `${index * 0.05}s`; // небольшая задержка для эффекта каскада
             card.innerHTML = `
                 <img class="product-img" src="${product.images[0]}" alt="${product.name}">
                 <div class="product-brand">${product.brand}</div>
                 <div class="product-title">${product.name}</div>
-                <div class="product-price">${product.price}</div>
+                <div class="product-price">${product.priceStr}</div>
                 <div class="product-sizes">${product.sizes.join(', ')}</div>
             `;
-            card.addEventListener('click', () => showProductDetail(product.id));
-            grid.appendChild(card);
+            card.addEventListener('click', () => openModal(product.id));
+            productsGrid.appendChild(card);
         });
-        // Показать первый товар по умолчанию
-        if (filtered.length > 0) {
-            showProductDetail(filtered[0].id);
-        }
     }
 
-    // Функция отображения деталей товара
-    function showProductDetail(productId) {
+    // Открыть модальное окно
+    function openModal(productId) {
         const product = products.find(p => p.id === productId);
         if (!product) return;
-        const detailDiv = document.getElementById('product-detail');
-        // Генерируем миниатюры
         let thumbnailsHtml = '';
         if (product.images && product.images.length > 1) {
-            thumbnailsHtml = `<div class="detail-thumbnails">${product.images.map(img => `<img class="detail-thumb" src="${img}" alt="thumbnail">`).join('')}</div>`;
+            thumbnailsHtml = `<div class="modal-thumbnails">${product.images.map(img => `<img class="modal-thumb" src="${img}" alt="thumbnail">`).join('')}</div>`;
         }
-        // Кнопки размеров
-        const sizeButtonsHtml = product.sizes.map(size => `<button class="size-btn">${size}</button>`).join('');
-        detailDiv.innerHTML = `
-            <div class="detail-gallery">
-                <img class="detail-main-img" id="detail-main-img" src="${product.images[0]}" alt="${product.name}">
-                ${thumbnailsHtml}
-            </div>
-            <div class="detail-brand">${product.brand}</div>
-            <div class="detail-title">${product.name}</div>
-            <div class="detail-price">${product.price}</div>
-            <div class="detail-description">${product.description}</div>
-            <div class="detail-material"><strong>Материал:</strong> ${product.material}</div>
-            <div class="detail-sizes"><strong>Размеры:</strong></div>
-            <div class="size-buttons">${sizeButtonsHtml}</div>
-            <div class="detail-care"><strong>Уход:</strong> ${product.care}</div>
-            <a href="${product.instagramLink}" target="_blank" class="instagram-order-btn">ЗАКАЗАТЬ В INSTAGRAM</a>
-            <hr>
-            <div class="delivery-info">
-                <strong>Ожидаемая доставка:</strong> 3–5 дней<br>
-                <strong>Сделано в:</strong> ${product.madeIn || 'Италия'}<br>
-                <strong>Модель на фото:</strong> ${product.modelHeight || '175 см'}, размер ${product.sizes[1] || 'S'}
+        modalBody.innerHTML = `
+            <div class="modal-product">
+                <div class="modal-gallery">
+                    <img class="modal-main-img" id="modal-main-img" src="${product.images[0]}" alt="${product.name}">
+                    ${thumbnailsHtml}
+                </div>
+                <div class="modal-info">
+                    <h2>${product.name}</h2>
+                    <div class="modal-brand">${product.brand}</div>
+                    <div class="modal-price">${product.priceStr}</div>
+                    <div class="modal-desc">${product.description}</div>
+                    <div class="modal-material"><strong>Материал:</strong> ${product.material}</div>
+                    <div class="modal-sizes"><strong>Размеры:</strong> ${product.sizes.join(', ')}</div>
+                    <div class="modal-care"><strong>Уход:</strong> ${product.care}</div>
+                    <a href="${product.instagramLink}" target="_blank" class="modal-direct">ЗАКАЗАТЬ В INSTAGRAM</a>
+                </div>
             </div>
         `;
-        // Обработка кликов на миниатюры
-        const mainImg = document.getElementById('detail-main-img');
-        const thumbs = document.querySelectorAll('.detail-thumb');
+        const mainImg = document.getElementById('modal-main-img');
+        const thumbs = document.querySelectorAll('.modal-thumb');
         thumbs.forEach(thumb => {
             thumb.addEventListener('click', () => {
                 mainImg.src = thumb.src;
             });
         });
-        // Подсветка выбранного товара в сетке
-        document.querySelectorAll('.product-card').forEach(card => {
-            if (parseInt(card.dataset.id) === productId) {
-                card.style.opacity = '0.8';
-            } else {
-                card.style.opacity = '1';
-            }
-        });
+        modal.classList.add('show');
+        modal.style.display = 'flex';
     }
 
-    // Инициализация
-    renderCategoryTiles();
-    renderProducts();
+    function closeModalFunc() {
+        modal.classList.remove('show');
+        setTimeout(() => {
+            modal.style.display = 'none';
+        }, 300);
+    }
+
+    // Применить фильтры
+    function applyFilters() {
+        minPrice = parseInt(priceMinInput.value) || 0;
+        maxPrice = parseInt(priceMaxInput.value) || 20000;
+        if (maxPrice < minPrice) maxPrice = minPrice;
+        searchQuery = searchInput.value;
+        renderProducts();
+    }
+
+    function resetFilters() {
+        searchInput.value = '';
+        priceMinInput.value = 0;
+        priceMaxInput.value = 20000;
+        selectedSizes = [];
+        renderSizeFilters();
+        searchQuery = '';
+        minPrice = 0;
+        maxPrice = 20000;
+        applyFilters();
+    }
+
+    function init() {
+        renderCategories();
+        renderSizeFilters();
+        priceMinInput.value = 0;
+        priceMaxInput.value = 20000;
+        searchInput.addEventListener('input', applyFilters);
+        priceMinInput.addEventListener('input', applyFilters);
+        priceMaxInput.addEventListener('input', applyFilters);
+        resetBtn.addEventListener('click', resetFilters);
+        closeModal.addEventListener('click', closeModalFunc);
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) closeModalFunc();
+        });
+        applyFilters();
+    }
+
+    init();
 </script>
 </body>
 </html>
